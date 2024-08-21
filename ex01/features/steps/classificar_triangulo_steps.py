@@ -7,7 +7,7 @@ def step_given_lados_do_triangulo(context, a, b, c):
     context.c = c
 
 @When("eu classifico o triângulo")
-def step_given_lados_do_triangulo(context):
+def step_when_lados_do_triangulo(context):
     context.resultado = "Equilátero"
 
 @Then("o resultado deve ser {esperado}")
