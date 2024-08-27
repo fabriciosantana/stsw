@@ -1,15 +1,14 @@
-from behave import Given, When, Then
+from behave import given, when, then
+from Triangulo import Triangulo
 
-@Given("os lados do triângulo {a}, {b}, {c}")
-def step_given_lados_do_triangulo(context, a, b, c):
-    context.a = a
-    context.b = b
-    context.c = c
+@given('um triângulo com lados {lado_a}, {lado_b}, {lado_c}')
+def step_given_triangulo(context, lado_a, lado_b, lado_c):
+    context.triangulo = Triangulo(int(lado_a), int(lado_b), int(lado_c))
 
-@When("eu classifico o triângulo")
-def step_given_lados_do_triangulo(context):
-    context.resultado = "Equilátero"
+@when('classifico o triângulo')
+def step_when_classifico_triangulo(context):
+    context.resultado = context.triangulo.tipo_triangulo()
 
-@Then("o resultado deve ser {esperado}")
-def set_then_o_resultado_deve_ser(context, esperado):
-    assert context.resultado == esperado, f"Esperado {esperado}, mas obteve {context.resultado}"
+@then('o tipo de triângulo deve ser "{resultado_esperado}"')
+def step_then_tipo_triangulo(context, resultado_esperado):
+    assert context.resultado == resultado_esperado
