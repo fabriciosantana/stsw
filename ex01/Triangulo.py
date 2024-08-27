@@ -24,9 +24,3 @@ class Triangulo:
             self.a + self.c > self.b and
             self.b + self.c > self.a
         )
-
-        return (
-            self.a + self.b > self.c and
-            self.a + self.c > self.b and
-            self.b + self.c > self.a
-        )
