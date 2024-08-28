@@ -3,3 +3,4 @@ allure-behave
 pytest
 allure-pytest
 pysonar-scanner
+coverage

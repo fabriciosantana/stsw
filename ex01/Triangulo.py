@@ -12,6 +12,9 @@ class Triangulo():
 
     def tipo_triangulo(self):
 
+        if not self.eh_valido_intervalo_dos_lados():
+            return "Fora do intervalo"
+
         if self.eh_valido():
             if self.a == self.b == self.c:
                 return "Equilátero"
@@ -26,3 +29,8 @@ class Triangulo():
         return (self.a + self.b > self.c and
                 self.b + self.c > self.a and
                 self.c + self.a > self.b)
+    
+    def eh_valido_intervalo_dos_lados(self):
+        return ((self.a >= 1 and self.a < 200) and
+                (self.b >= 1 and self.b < 200) and
+                (self.c >= 1 and self.c < 200))

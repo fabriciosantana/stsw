@@ -15,3 +15,15 @@ Feature: Classificar Triângulo
             | a | b | c | esperado |
             | 3 | 3 | 3 | Equilátero |
             | 2 | 2 | 2 | Equilátero |
+            | 1	| 1	| 1	|Equilátero |
+            | 1	| 2	| 200| Não é um triângulo |
+            | 1 | 50 | 50 | Isósceles |
+            | 2 | 50 | 50 | Isósceles |
+            | 50 | 50 | 50 | Equilátero |
+            | 199 | 50 | 50 | Não é um triângulo |
+            | 200 | 50 | 50 | Não é um triângulo |
+            | 201 | 50 | 50 | Fora do intervalo |
+                
+    Scenario: Classificar triângulo com lado igual a uma letra
+        Given os lados do triângulo x, y, z
+        Then o sistema deve disparar exception
