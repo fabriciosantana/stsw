@@ -22,3 +22,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: ex01/
+          args: "-Dsonar.projectBaseDir=ex01 -X"
