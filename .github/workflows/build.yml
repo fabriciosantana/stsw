@@ -12,11 +12,13 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - name: List ex01 directory
-        run: ls -la ex01
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: List repository root directory
+        run: ls -la
+      - name: List ex01 directory
+        run: ls -la ex01
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
