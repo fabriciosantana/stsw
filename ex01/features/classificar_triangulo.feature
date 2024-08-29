@@ -6,24 +6,20 @@ Feature: Classificação de Triângulos
   Scenario: Triângulo Equilátero
     Given os lados do triângulo 5, 5, 5
     When eu classifico o triângulo
-    Then o resultado deve ser "Equilátero"
+    Then o resultado deve ser Equilátero
 
-  Scenario: Triângulo Isósceles
-    Given os lados do triângulo 5, 5, 3
+  Scenario Outline: Classificar um triângulo válido
+    Given os lados do triângulo <a>, <b>, <c>
     When eu classifico o triângulo
-    Then o resultado deve ser "Isósceles"
-
-  Scenario: Triângulo Escaleno
-    Given os lados do triângulo 5, 4, 3
-    When eu classifico o triângulo
-    Then o resultado deve ser "Escaleno"
-
-  Scenario: Não é um Triângulo
-    Given os lados do triângulo 1, 2, 3
-    When eu classifico o triângulo
-    Then o resultado deve ser "Não é um triângulo"
-
-  Scenario: Lados Inválidos
-    Given os lados do triângulo -5, 0, 5
-    When eu classifico o triângulo
-    Then o resultado deve ser "Lados inválidos"
+    Then o resultado deve ser <esperado>
+    Examples:
+        | a | b | c | esperado |
+        | 1 | 2 | 200 | Não é um triângulo |
+        | 1 | 50 | 50 | Isósceles |
+        | 201 | 50 | 50 | Fora do intervalo |
+        | 4 | 5 | 6 | Escaleno |
+        | -1 | 5 | 5 | Fora do intervalo |
+        | 205 | 205 | 205 | Fora do intervalo |
+        | 10 | 11 | 12 | Escaleno |
+        | 100 | 100 | 2 | Isósceles |
+        | 1 | 1 | 199 | Não é um triângulo |
