@@ -6,10 +6,13 @@ def main():
         b = int(input("Digite o comprimento do segundo lado: "))
         c = int(input("Digite o comprimento do terceiro lado: "))
         
-        print(Triangulo(a,b, c))
+        t = Triangulo(a,b, c)
+
+        print(t.tipo_triangulo())
+        print(t)
 
     except ValueError as e:
-        print(str(e))
+        print("Ocorreu um erro: " + str(e))
     except Exception:
         print("Ocorreu um erro")
 
