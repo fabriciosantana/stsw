@@ -7,6 +7,8 @@ on:
       - ex01/**
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - ex01/**
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -21,4 +23,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: ex01/
+          #projectBaseDir: ex01/
+          args: |
+            -Dsonar.projectKey=triangle
+            -Dsonar.organization=fabriciosantana
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+            -Dsonar.pullrequest.provider=GitHub
+            -Dsonar.pullrequest.github.repository=fabriciosantana/stsw
