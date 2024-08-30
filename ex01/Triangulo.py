@@ -34,4 +34,3 @@ class Triangulo():
         return ((self.a >= 1 and self.a < 200) and
                 (self.b >= 1 and self.b < 200) and
                 (self.c >= 1 and self.c < 200))
-#só para testar
