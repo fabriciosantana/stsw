@@ -31,6 +31,6 @@ class Triangulo():
                 self.c + self.a > self.b)
     
     def eh_valido_intervalo_dos_lados(self):
-        return ((self.a >= 1 and self.a < 200) and
-                (self.b >= 1 and self.b < 200) and
-                (self.c >= 1 and self.c < 200))
+        return ((self.a >= 1 and self.a <= 200) and
+                (self.b >= 1 and self.b <= 200) and
+                (self.c >= 1 and self.c <= 200))
