@@ -1,0 +1,3 @@
+[console_scripts]
+pysonar-scanner=pysonar_scanner.__main__:scan
+
