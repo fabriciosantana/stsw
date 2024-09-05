@@ -1,4 +1,4 @@
-class Triangulo:
+class Triangulo():
     def __init__(self, a, b, c):
         if not all(isinstance(lado, int) and 1 <= lado <= 200 for lado in (a, b, c)):
             raise ValueError("Somente números inteiros entre 1 e 200.")
