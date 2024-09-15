@@ -1,0 +1,4 @@
+[run]
+branch = True
+[html]
+directory = coverage_html_report
