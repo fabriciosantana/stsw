@@ -7,30 +7,30 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class TriangleClassifierTest {
 
-    @Test
+    @LoginTest
     void testEquilatero() {
         assertEquals("Equilátero", TriangleClassifier.classificar(5, 5, 5));
     }
 
-    @Test
+    @LoginTest
     void testIsosceles() {
         assertEquals("Isósceles", TriangleClassifier.classificar(5, 5, 3));
         assertEquals("Isósceles", TriangleClassifier.classificar(3, 5, 5));
         assertEquals("Isósceles", TriangleClassifier.classificar(5, 3, 5));
     }
 
-    @Test
+    @LoginTest
     void testEscaleno() {
         assertEquals("Escaleno", TriangleClassifier.classificar(3, 4, 5));
     }
 
-    @Test
+    @LoginTest
     void testNaoEhTriangulo() {
         assertEquals("Não é um triângulo", TriangleClassifier.classificar(1, 2, 3));
         assertEquals("Não é um triângulo", TriangleClassifier.classificar(10, 1, 1));
     }
 
-    @Test
+    @LoginTest
     void testLadosInvalidos() {
         assertEquals("Lados inválidos", TriangleClassifier.classificar(0, 5, 5));
         assertEquals("Lados inválidos", TriangleClassifier.classificar(201, 100, 100));

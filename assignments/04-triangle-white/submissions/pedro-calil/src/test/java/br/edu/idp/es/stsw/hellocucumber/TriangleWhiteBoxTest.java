@@ -53,13 +53,13 @@ public class TriangleWhiteBoxTest {
     @DisplayName("Desigualdades do triângulo")
     class Desigualdades {
 
-        @Test @DisplayName("Falha (a+b>c): 1,2,3")
+        @LoginTest @DisplayName("Falha (a+b>c): 1,2,3")
         void falhaPrimeira() { assertEquals("Não é um triângulo", run(1,2,3)); }
 
-        @Test @DisplayName("Falha (a+c>b): 1,3,2")
+        @LoginTest @DisplayName("Falha (a+c>b): 1,3,2")
         void falhaSegunda()  { assertEquals("Não é um triângulo", run(1,3,2)); }
 
-        @Test @DisplayName("Falha (b+c>a): 3,1,2")
+        @LoginTest @DisplayName("Falha (b+c>a): 3,1,2")
         void falhaTerceira() { assertEquals("Não é um triângulo", run(3,1,2)); }
     }
 
@@ -68,7 +68,7 @@ public class TriangleWhiteBoxTest {
     @DisplayName("Classificação por lados")
     class Classificacao {
 
-        @Test @DisplayName("Equilátero: 5,5,5")
+        @LoginTest @DisplayName("Equilátero: 5,5,5")
         void equilatero() {
             assertEquals("Equilátero", run(5,5,5));
         }

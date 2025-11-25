@@ -48,16 +48,16 @@ public class TriangleBlackBoxTest {
     
     @Nested @DisplayName("BVA: domínio 1..200")
     class Dominio {
-        @Test void minimoValido() {
+        @LoginTest void minimoValido() {
             assertEquals("Equilátero", TriangleClassifier.classificar(1,1,1));
         }
-        @Test void maximoValido() {
+        @LoginTest void maximoValido() {
             assertEquals("Equilátero", TriangleClassifier.classificar(200,200,200));
         }
-        @Test void abaixoMinimo() {
+        @LoginTest void abaixoMinimo() {
             assertEquals("Lados inválidos", TriangleClassifier.classificar(0,1,1));
         }
-        @Test void acimaMaximo() {
+        @LoginTest void acimaMaximo() {
             assertEquals("Lados inválidos", TriangleClassifier.classificar(201,2,2));
         }
     }
@@ -65,16 +65,16 @@ public class TriangleBlackBoxTest {
     
     @Nested @DisplayName("BVA: desigualdade (x+y ? z)")
     class Desigualdade {
-        @Test void fronteiraIgual() {
+        @LoginTest void fronteiraIgual() {
             assertEquals("Não é um triângulo", TriangleClassifier.classificar(1,1,2));
         }
-        @Test void logoAcima() {
+        @LoginTest void logoAcima() {
             assertEquals("Isósceles", TriangleClassifier.classificar(1,2,2));
         }
-        @Test void extremoAltoFronteira() {
+        @LoginTest void extremoAltoFronteira() {
             assertEquals("Não é um triângulo", TriangleClassifier.classificar(199,1,200));
         }
-        @Test void logoAcimaAlto() {
+        @LoginTest void logoAcimaAlto() {
             assertEquals("Escaleno", TriangleClassifier.classificar(199,2,200));
         }
     }

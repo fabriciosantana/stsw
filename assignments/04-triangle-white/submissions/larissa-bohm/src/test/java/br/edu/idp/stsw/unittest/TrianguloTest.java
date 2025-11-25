@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class TrianguloTest {
 
-    @Test
+    @LoginTest
     void simpleClassificationTest() {
         assertEquals("Isósceles", Triangulo.classificar(5, 5, 3));
     }

@@ -88,3 +88,4 @@ mvn clean verify -Dwebdriver.driver=chrome -Dwebdriver.base.url=https://www.sauc
 
 Qualquer ajuste fino (ex.: apontar `webdriver.base.url`) pode ser feito sem alterar código, só via propriedades de linha de comando.
 
+

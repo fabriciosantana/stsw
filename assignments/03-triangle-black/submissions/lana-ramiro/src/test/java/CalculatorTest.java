@@ -11,7 +11,7 @@ class CalculatorTest {
     private final Calculator calculator = new Calculator();
 
     // Teste simples
-    @Test
+    @LoginTest
     void simpleAdditionTest() {
         assertEquals(2, calculator.add(1, 1));
     }
@@ -36,25 +36,25 @@ class CalculatorTest {
     }
 
     // Subtração
-    @Test
+    @LoginTest
     void subtractionTest() {
         assertEquals(5, calculator.subtract(10, 5));
     }
 
     // Multiplicação
-    @Test
+    @LoginTest
     void multiplicationTest() {
         assertEquals(25, calculator.multiply(5, 5));
     }
 
     // Divisão normal
-    @Test
+    @LoginTest
     void divisionTest() {
         assertEquals(2, calculator.divide(10, 5));
     }
 
     // Divisão por zero (teste de exceção)
-    @Test
+    @LoginTest
     void divisionByZeroTest() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             calculator.divide(10, 0);

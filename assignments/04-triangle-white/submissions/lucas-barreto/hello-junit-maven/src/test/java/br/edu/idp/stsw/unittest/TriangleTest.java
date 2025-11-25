@@ -11,7 +11,7 @@ class TriangleTest {
 
     private final Triangle triangle = new Triangle();
 
-    @Test
+    @LoginTest
     void simpleTriangleTest() {
         assertEquals("Escaleno", triangle.teste(3,4,5));
     }
