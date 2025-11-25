@@ -80,4 +80,3 @@ O problema do triângulo envolve a criação de um programa que determina o tipo
 - **Linguagem de Programação**: `Java`.
 - **Framework de Testes**: `Junit` e `cucumber-java` para desenvolvimento orientado por comportamento (BDD).
 - **Editor de Código/IDE**: Visual Studio Code ou qualquer outro editor com suporte para Python.
-- **Controle de Versão**: Git, para versionar o código e colaborar com colegas de equipe.

@@ -12,10 +12,10 @@ public class TrianguloSteps {
     private String resultado;
 
     @Given("os lados do triângulo são {int}, {int}, {int}")
-    public void os_lados_do_triangulo_sao(int ladoA, int ladoB, int ladoC) {
-        this.a = ladoA;
-        this.b = ladoB;
-        this.c = ladoC;
+    public void os_lados_do_triangulo_sao(int a, int b, int c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
     }
 
     @When("eu classifico o triângulo")

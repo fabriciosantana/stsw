@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 40px auto; max-width: 420px; }
+    form { display: grid; gap: 12px; }
+    label { display: grid; gap: 6px; }
+    input[type="text"], input[type="password"] { padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; }
+    .primary { background: #111; color: #fff; }
+    .alert { padding: 8px 10px; border-radius: 6px; background: #ffe8e8; color: #b00020; margin-bottom: 10px; }
+    .info { background: #e8f3ff; color: #0a50a1; }
+  </style>
+</head>
+<body>
+  <h1>Entrar</h1>
+
+  <div id="msg"></div>
+
+  <form method="post" action="/login" aria-labelledby="login-form">
+    <label>
+      <span>Usuário</span>
+      <input aria-label="Usuário" name="username" type="text" autocomplete="username" required>
+    </label>
+    <label>
+      <span>Senha</span>
+      <input aria-label="Senha" name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <button class="primary" type="submit">Entrar</button>
+  </form>
+
+  <p style="margin-top: 16px; color: #555;">
+    Dica para testes: <code>admin / 123456</code>
+  </p>
+
+  <script>
+    // mostra mensagens vindas por query string (?err=... / ?info=...)
+    const params = new URLSearchParams(location.search);
+    if (params.get('err')) {
+      document.getElementById('msg').innerHTML = '<div role="alert" class="alert">'+params.get('err')+'</div>';
+    } else if (params.get('info')) {
+      document.getElementById('msg').innerHTML = '<div role="status" class="alert info">'+params.get('info')+'</div>';
+    }
+  </script>
+</body>
+</html>

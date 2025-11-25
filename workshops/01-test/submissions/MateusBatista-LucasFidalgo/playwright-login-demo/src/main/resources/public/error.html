@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Erro</title>
+</head>
+<body style="font-family: system-ui, sans-serif; margin: 40px auto; max-width: 720px;">
+  <h1>Ops!</h1>
+  <p id="msg">Ocorreu um erro.</p>
+  <p><a href="/login">Voltar ao login</a></p>
+  <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get('msg')) {
+      document.getElementById('msg').textContent = params.get('msg');
+    }
+  </script>
+</body>
+</html>
