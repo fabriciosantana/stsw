@@ -1,0 +1,7 @@
+#!/home/estagio/xss_demo/venv/bin/python3
+import sys
+from tld.utils import update_tld_names_cli
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(update_tld_names_cli())

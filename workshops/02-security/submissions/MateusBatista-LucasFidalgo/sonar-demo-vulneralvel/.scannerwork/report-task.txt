@@ -1,0 +1,6 @@
+projectKey=sonar-demo-vulneravel
+serverUrl=http://localhost:9000
+serverVersion=25.11.0.114957
+dashboardUrl=http://localhost:9000/dashboard?id=sonar-demo-vulneravel
+ceTaskId=bb536c74-a8b9-420d-8d07-8aabb27ec0ff
+ceTaskUrl=http://localhost:9000/api/ce/task?id=bb536c74-a8b9-420d-8d07-8aabb27ec0ff

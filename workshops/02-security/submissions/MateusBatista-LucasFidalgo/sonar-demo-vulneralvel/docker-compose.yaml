@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: vuln-app
+    ports:
+      - "3000:3000"
+    # Se quiser ver logs no terminal com mais clareza
+    environment:
+      - NODE_ENV=development
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      # Evita checks de produção quando rodando em Docker simples
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
