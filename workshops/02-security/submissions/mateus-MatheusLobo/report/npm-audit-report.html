@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Vulnerabilidades - npm audit (NÃO é do OWASP Dependency-Check)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h1 {
+      color: #d32f2f;
+      margin-bottom: 10px;
+      border-bottom: 3px solid #d32f2f;
+      padding-bottom: 10px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+    .stat-card {
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+    }
+    .stat-card.critical { background: #b71c1c; }
+    .stat-card.high { background: #d32f2f; }
+    .stat-card.moderate { background: #f57c00; }
+    .stat-card.low { background: #fbc02d; color: #333; }
+    .stat-card.info { background: #1976d2; }
+    .stat-number {
+      font-size: 2.5em;
+      margin-bottom: 5px;
+    }
+    .vuln-list {
+      margin-top: 30px;
+    }
+    .vuln-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: #fafafa;
+    }
+    .vuln-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .vuln-name {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #1976d2;
+    }
+    .severity-badge {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.9em;
+      text-transform: uppercase;
+    }
+    .severity-badge.critical { background: #b71c1c; color: white; }
+    .severity-badge.high { background: #d32f2f; color: white; }
+    .severity-badge.moderate { background: #f57c00; color: white; }
+    .vuln-details {
+      margin-top: 15px;
+    }
+    .vuln-details p {
+      margin: 8px 0;
+    }
+    .vuln-details strong {
+      color: #555;
+    }
+    .vuln-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #1976d2;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .vuln-link:hover {
+      background: #1565c0;
+    }
+    .fix-available {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 4px;
+    }
+    .fix-available strong {
+      color: #2e7d32;
+    }
+    .no-vulns {
+      text-align: center;
+      padding: 40px;
+      color: #4caf50;
+      font-size: 1.2em;
+    }
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔒 Relatório de Vulnerabilidades</h1>
+    <div class="info-box">
+      <strong>⚠️ ATENÇÃO:</strong> Este é um relatório gerado a partir do <strong>npm audit</strong> (JSON convertido para HTML).<br>
+      Para o relatório HTML oficial do <strong>OWASP Dependency-Check</strong>, execute: <code>node scan.js</code><br>
+      O relatório oficial estará em: <code>./report/dependency-check-report.html</code>
+    </div>
+    <p style="color: #666; margin-bottom: 20px;">Gerado por npm audit - 28/11/2025, 08:48:59</p>
+    
+    <div class="summary">
+      <div class="stat-card critical">
+        <div class="stat-number">0</div>
+        <div>Críticas</div>
+      </div>
+      <div class="stat-card high">
+        <div class="stat-number">4</div>
+        <div>Altas</div>
+      </div>
+      <div class="stat-card moderate">
+        <div class="stat-number">0</div>
+        <div>Médias</div>
+      </div>
+      <div class="stat-card low">
+        <div class="stat-number">3</div>
+        <div>Baixas</div>
+      </div>
+      <div class="stat-card info">
+        <div class="stat-number">0</div>
+        <div>Info</div>
+      </div>
+    </div>
+    
+    <div class="vuln-list">
+      
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">body-parser</div>
+                  <span class="severity-badge high">high</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> body-parser vulnerable to denial of service when url encoding is enabled</p>
+                    <p><strong>CVSS Score:</strong> 7.5</p>
+                    <p><strong>Versão afetada:</strong> <=1.20.2</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-405</p>
+                    <a href="https://github.com/advisories/GHSA-qwcr-r2fm-qrc7" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">cookie</div>
+                  <span class="severity-badge low">low</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> cookie accepts cookie name, path, and domain with out of bounds characters</p>
+                    <p><strong>CVSS Score:</strong> N/A</p>
+                    <p><strong>Versão afetada:</strong> <0.7.0</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-74</p>
+                    <a href="https://github.com/advisories/GHSA-pxg6-pf52-xh8x" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">express</div>
+                  <span class="severity-badge high">high</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> Express.js Open Redirect in malformed URLs</p>
+                    <p><strong>CVSS Score:</strong> 6.1</p>
+                    <p><strong>Versão afetada:</strong> <=4.21.0 || 5.0.0-alpha.1 - 5.0.0</p>
+                    <p><strong>Dependência direta:</strong> Sim</p>
+                    <p><strong>CWE:</strong> CWE-601, CWE-1286</p>
+                    <a href="https://github.com/advisories/GHSA-rv95-896h-c2vc" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">path-to-regexp</div>
+                  <span class="severity-badge high">high</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> path-to-regexp outputs backtracking regular expressions</p>
+                    <p><strong>CVSS Score:</strong> 7.5</p>
+                    <p><strong>Versão afetada:</strong> <=0.1.11</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-1333</p>
+                    <a href="https://github.com/advisories/GHSA-9wv6-86v2-598j" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">qs</div>
+                  <span class="severity-badge high">high</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> qs vulnerable to Prototype Pollution</p>
+                    <p><strong>CVSS Score:</strong> 7.5</p>
+                    <p><strong>Versão afetada:</strong> 6.5.0 - 6.5.2</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-1321</p>
+                    <a href="https://github.com/advisories/GHSA-hrpp-h998-j3pp" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">send</div>
+                  <span class="severity-badge low">low</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> send vulnerable to template injection that can lead to XSS</p>
+                    <p><strong>CVSS Score:</strong> 5</p>
+                    <p><strong>Versão afetada:</strong> <0.19.0</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-79</p>
+                    <a href="https://github.com/advisories/GHSA-m6fv-jmcg-4jfg" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize express para versão 4.21.2
+                    </div>
+                  
+                </div>
+              </div>
+            
+              <div class="vuln-item">
+                <div class="vuln-header">
+                  <div class="vuln-name">serve-static</div>
+                  <span class="severity-badge low">low</span>
+                </div>
+                <div class="vuln-details">
+                  
+                    <p><strong>Descrição:</strong> serve-static vulnerable to template injection that can lead to XSS</p>
+                    <p><strong>CVSS Score:</strong> 5</p>
+                    <p><strong>Versão afetada:</strong> <=1.16.0</p>
+                    <p><strong>Dependência direta:</strong> Não</p>
+                    <p><strong>CWE:</strong> CWE-79</p>
+                    <a href="https://github.com/advisories/GHSA-cm22-4g7w-348p" target="_blank" class="vuln-link">Ver detalhes no GitHub</a>
+                  
+                  
+                    <div class="fix-available">
+                      <strong>✅ Correção disponível:</strong> Atualize undefined para versão undefined
+                    </div>
+                  
+                </div>
+              </div>
+            
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Download OWASP Dependency-Check
+      run: |
+        DEPENDENCY_CHECK_VERSION=9.0.9
+        wget -q https://github.com/jeremylong/DependencyCheck/releases/download/v${DEPENDENCY_CHECK_VERSION}/dependency-check-${DEPENDENCY_CHECK_VERSION}-release.zip
+        unzip -q dependency-check-${DEPENDENCY_CHECK_VERSION}-release.zip
+        chmod +x dependency-check/bin/dependency-check.sh
+        echo "$PWD/dependency-check/bin" >> $GITHUB_PATH
+    
+    - name: Run OWASP Dependency-Check
+      run: |
+        dependency-check.sh \
+          --project "vulnerable-app" \
+          --scan ./ \
+          --format HTML \
+          --format JSON \
+          --out ./report \
+          --enableExperimental \
+          --failOnCVSS 0
+    
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: dependency-check-report
+        path: report/dependency-check-report.html
+        retention-days: 30
+    
+    - name: Upload JSON report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: dependency-check-report-json
+        path: report/dependency-check-report.json
+        retention-days: 30
+
+
+
+

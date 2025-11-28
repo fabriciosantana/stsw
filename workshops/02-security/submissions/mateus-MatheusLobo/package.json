@@ -1,0 +1,16 @@
+{
+  "name": "vulnerable-app",
+  "version": "1.0.0",
+  "description": "Aplicação vulnerável para demonstração",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "4.16.0"
+  }
+}
+
+
+
+
