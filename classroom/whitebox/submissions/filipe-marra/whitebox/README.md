@@ -1,25 +1,37 @@
 # Whitebox - Calculadora de Descontos
 
-Este projeto foi desenvolvido para praticar **teste caixa branca** com Java.
-A ideia foi implementar uma regra de negócio simples e criar testes pensando
-nos critérios de cobertura vistos em aula.
+Este projeto implementa uma calculadora de descontos e organiza testes unitarios
+por criterios de cobertura de caixa branca.
 
-## Objetivo do projeto
+## Objetivo
 
-Implementar o método `calculateDiscount(...)` na classe `DiscountCalculator`
-e validar seu comportamento com suítes de testes organizadas por critério.
+Validar a regra de negocio do metodo `calculateDiscount(...)` usando suites de
+teste separadas por intencao didatica:
 
-## Regras implementadas
+- `StatementCoverageTest`
+- `DecisionCoverageTest`
+- `ConditionCoverageTest`
+- `ConditionDecisionCoverageTest`
+- `PathCoverageTest`
 
-O desconto começa em `0` e recebe incrementos por regra:
+## Regra De Negocio
 
-1. Compra com valor **>= 100**: +10
-2. Cliente premium: +5
-3. Cupom válido **e** compra **>= 200**: +15
-4. Black Friday **ou** (premium **e** compra **>= 300**): +20
-5. Teto máximo de desconto: **40**
+O desconto inicia em `0` e recebe os seguintes incrementos:
 
-O método retorna o **percentual total de desconto**.
+1. Compra com valor maior ou igual a `100`: adiciona `10`.
+2. Cliente premium: adiciona `5`.
+3. Cupom valido e compra maior ou igual a `200`: adiciona `15`.
+4. Black Friday ou cliente premium com compra maior ou igual a `300`: adiciona `20`.
+5. O desconto maximo permitido e `40`.
+
+O metodo retorna o percentual final de desconto.
+
+## Tecnologias
+
+- Java 21
+- Maven
+- JUnit 5
+- JaCoCo
 
 ## Estrutura
 
@@ -37,35 +49,22 @@ whitebox
         └── PathCoverageTest.java
 ```
 
-## Tecnologias
+## Como Executar
 
-- Java 21
-- Maven
-- JUnit 5
-- JaCoCo
-
-## Como executar
+Rodar todos os testes:
 
 ```bash
 mvn test
 ```
 
-Para rodar uma suíte específica:
+Rodar uma suite especifica:
 
 ```bash
 mvn -Dtest=DecisionCoverageTest test
 ```
 
-## O que cada suíte demonstra
+O relatorio HTML do JaCoCo e gerado em:
 
-- `StatementCoverageTest`: percorre instruções principais do método.
-- `DecisionCoverageTest`: força decisões para `true` e `false`.
-- `ConditionCoverageTest`: exercita condições atômicas nas decisões compostas.
-- `ConditionDecisionCoverageTest`: combina decisão + condição no mesmo conjunto.
-- `PathCoverageTest`: percorre caminhos representativos da lógica.
-
-## Resultado atual
-
-Todos os testes passam e o projeto gera relatório do JaCoCo em:
-
-`target/site/jacoco/index.html`
+```text
+target/site/jacoco/index.html
+```

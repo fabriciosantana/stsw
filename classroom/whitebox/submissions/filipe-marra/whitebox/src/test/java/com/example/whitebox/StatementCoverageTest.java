@@ -1,20 +1,17 @@
 package com.example.whitebox;
-import org.junit.jupiter.api.Test;
 
-import com.example.whitebox.DiscountCalculator;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.beans.Transient;
+class StatementCoverageTest {
 
-public class StatementCoverageTest {
-
-    private final DiscountCalculator discountCalculator = new DiscountCalculator();
+    private final DiscountCalculator calculator = new DiscountCalculator();
 
     @Test
     void shouldExecuteMainStatements() {
-        int discount = discountCalculator.calculateDiscount(true, 300, true, false);
+        int discount = calculator.calculateDiscount(true, 300, true, false);
+
         assertEquals(40, discount);
     }
-    
 }
