@@ -1,0 +1,6 @@
+br\edu\idp\es\stsw\pyramid\repository\PersonRepository.class
+br\edu\idp\es\stsw\pyramid\service\GreetingService.class
+br\edu\idp\es\stsw\pyramid\service\WeatherService.class
+br\edu\idp\es\stsw\pyramid\PyramidPracticalApplication.class
+br\edu\idp\es\stsw\pyramid\entity\Person.class
+br\edu\idp\es\stsw\pyramid\controller\GreetingController.class

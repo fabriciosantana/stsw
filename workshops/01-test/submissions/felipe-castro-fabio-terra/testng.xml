@@ -1,0 +1,53 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TriangleSuite">
+
+    <listeners>
+        <listener class-name="app.ExtentReportListener"/>
+    </listeners>
+
+    <test name="Testes de Validacao">
+        <groups>
+            <run>
+                <include name="invalidos"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="app.TriangleTest"/>
+        </classes>
+    </test>
+
+    <test name="Testes de Classificacao">
+        <groups>
+            <run>
+                <include name="classificacao"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="app.TriangleTest"/>
+        </classes>
+    </test>
+
+    <test name="Testes de Excecao e Performance">
+        <groups>
+            <run>
+                <include name="excecoes"/>
+                <include name="performance"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="app.TriangleTest"/>
+        </classes>
+    </test>
+
+    <test name="Testes Intencionalmente Falhos">
+        <groups>
+            <run>
+                <include name="falhas"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="app.TriangleTest"/>
+        </classes>
+    </test>
+
+</suite>

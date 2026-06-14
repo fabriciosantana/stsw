@@ -1,0 +1,38 @@
+{
+  "name": "legalflow-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test:visual": "playwright test tests/visual-test.spec.ts --headed",
+    "test:ui": "playwright test --ui",
+    "test:tour": "playwright test tests/ui-tour-completo.spec.ts --headed",
+    "test:tour:slow": "SLOW_MS=1400 playwright test tests/ui-tour-completo.spec.ts --headed"
+  },
+  "dependencies": {
+    "@legalflow/shared": "*",
+    "@xyflow/react": "^12.4.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.468.0",
+    "mermaid": "^11.4.0",
+    "next": "14.2.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.14",
+    "@types/react-dom": "^18.3.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.0"
+  }
+}

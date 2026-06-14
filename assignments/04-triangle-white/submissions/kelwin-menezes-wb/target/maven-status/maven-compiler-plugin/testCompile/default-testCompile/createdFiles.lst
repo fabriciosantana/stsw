@@ -1,0 +1,5 @@
+com\classroom\whitebox\ConditionCoverageTest.class
+com\classroom\whitebox\ConditionDecisionCoverageTest.class
+com\classroom\whitebox\StatementCoverageTest.class
+com\classroom\whitebox\PathCoverageTest.class
+com\classroom\whitebox\DecisionCoverageTest.class

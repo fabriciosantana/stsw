@@ -1,0 +1,16 @@
+# Ambientes virtuais locais
+.venv/
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Artefatos de execucao
+__pycache__/
+*.py[cod]
+*.log
+
+# Arquivos locais de ferramentas e editores
+.env
+.idea/
+.vscode/

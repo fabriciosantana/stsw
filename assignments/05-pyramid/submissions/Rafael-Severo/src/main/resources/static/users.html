@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .message { margin: 15px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f8f9fa; }
+        .actions { display: flex; gap: 5px; }
+        .edit-btn { background: #ffc107; }
+        .edit-btn:hover { background: #e0a800; }
+        .delete-btn { background: #dc3545; }
+        .delete-btn:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management System</h1>
+
+        <div id="message" class="message" style="display: none;"></div>
+
+        <!-- Create User Form -->
+        <div class="form-group">
+            <h2>Create New User</h2>
+            <div class="form-group">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" required>
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Email:</label>
+                <input type="email" id="userEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="userPassword">Password:</label>
+                <input type="password" id="userPassword" required>
+            </div>
+            <button id="createUserBtn">Create User</button>
+        </div>
+
+        <!-- Update User Form (hidden by default) -->
+        <div id="updateForm" class="form-group" style="display: none;">
+            <h2>Update User</h2>
+            <input type="hidden" id="updateUserId">
+            <div class="form-group">
+                <label for="updateUserName">Name:</label>
+                <input type="text" id="updateUserName" required>
+            </div>
+            <div class="form-group">
+                <label for="updateUserEmail">Email:</label>
+                <input type="email" id="updateUserEmail" required>
+            </div>
+            <button id="updateUserBtn">Update User</button>
+            <button id="cancelUpdateBtn">Cancel</button>
+        </div>
+
+        <!-- Users List -->
+        <div class="form-group">
+            <h2>Users List</h2>
+            <button id="refreshUsersBtn">Refresh</button>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5">Click "Refresh" to load users</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/users';
+
+        // Utility functions
+        function showMessage(message, isError = false) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${isError ? 'error' : 'success'}`;
+            messageDiv.style.display = 'block';
+            setTimeout(() => messageDiv.style.display = 'none', 5000);
+        }
+
+        function clearForm() {
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('userPassword').value = '';
+        }
+
+        // Create User
+        document.getElementById('createUserBtn').addEventListener('click', async () => {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const password = document.getElementById('userPassword').value.trim();
+
+            if (!name || !email || !password) {
+                showMessage('All fields are required', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                if (response.ok) {
+                    showMessage('User created successfully');
+                    clearForm();
+                    loadUsers();
+                } else {
+                    const error = await response.text();
+                    showMessage(error || 'Failed to create user', true);
+                }
+            } catch (error) {
+                showMessage('Network error', true);
+            }
+        });
+
+        // Load Users
+        async function loadUsers() {
+            try {
+                const response = await fetch(API_BASE);
+                const users = await response.json();
+
+                const tbody = document.querySelector('#usersTable tbody');
+                tbody.innerHTML = '';
+
+                if (users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">No users found</td></tr>';
+                    return;
+                }
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.active ? 'Active' : 'Inactive'}</td>
+                        <td class="actions">
+                            <button class="edit-btn" onclick="editUser(${user.id}, '${user.name}', '${user.email}')">Edit</button>
+                            <button class="delete-btn" onclick="deleteUser(${user.id})">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                showMessage('Failed to load users', true);
+            }
+        }
+
+        // Edit User
+        function editUser(id, name, email) {
+            document.getElementById('updateUserId').value = id;
+            document.getElementById('updateUserName').value = name;
+            document.getElementById('updateUserEmail').value = email;
+            document.getElementById('updateForm').style.display = 'block';
+        }
+
+        // Update User
+        document.getElementById('updateUserBtn').addEventListener('click', async () => {
+            const id = document.getElementById('updateUserId').value;
+            const name = document.getElementById('updateUserName').value.trim();
+            const email = document.getElementById('updateUserEmail').value.trim();
+
+            if (!name || !email) {
+                showMessage('Name and email are required', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email })
+                });
+
+                if (response.ok) {
+                    showMessage('User updated successfully');
+                    document.getElementById('updateForm').style.display = 'none';
+                    loadUsers();
+                } else {
+                    const error = await response.text();
+                    showMessage(error || 'Failed to update user', true);
+                }
+            } catch (error) {
+                showMessage('Network error', true);
+            }
+        });
+
+        // Cancel Update
+        document.getElementById('cancelUpdateBtn').addEventListener('click', () => {
+            document.getElementById('updateForm').style.display = 'none';
+        });
+
+        // Delete User
+        async function deleteUser(id) {
+            if (!confirm('Are you sure you want to delete this user?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('User deleted successfully');
+                    loadUsers();
+                } else {
+                    showMessage('Failed to delete user', true);
+                }
+            } catch (error) {
+                showMessage('Network error', true);
+            }
+        }
+
+        // Refresh Users
+        document.getElementById('refreshUsersBtn').addEventListener('click', loadUsers);
+
+        // Load users on page load
+        loadUsers();
+    </script>
+</body>
+</html>
