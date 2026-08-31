@@ -25,7 +25,6 @@ replay_pid*
 .vscode/
 target/
 lib/
-**/fabricio-santana/
 
 # Playwright MCP scratch output (snapshots, console logs, temp uploads)
 .playwright-mcp/
