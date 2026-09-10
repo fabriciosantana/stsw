@@ -90,15 +90,15 @@ classroom/05-ecp
 
 Desenvolva uma classe de domínio, por exemplo:
 
-- `LaboratoryReservationPolicy`
+- `PoliticaReservaLaboratorio`
 
 Essa classe deve conter um método público semelhante a:
 
 ```java
-String evaluate(int estudantes,
-                int duracao,
-                int antecedencia,
-                String solicitante)
+DecisaoReserva avaliar(int estudantes,
+                       int duracao,
+                       int diasAntecedencia,
+                       TipoSolicitante solicitante)
 ```
 
 O método deve retornar:
@@ -108,7 +108,7 @@ O método deve retornar:
 - `RECUSADA`
 - `DADOS_INVALIDOS`
 
-Você pode usar `enum` em vez de `String`, se preferir.
+Crie os enums `DecisaoReserva` e `TipoSolicitante` para representar esses valores.
 
 ### Parte 2: Modelo de classes de equivalência
 
@@ -133,9 +133,9 @@ Não trate cada valor de um mesmo intervalo como uma nova classe. A partição d
 
 Implemente os testes em JUnit 5. Organize-os, por exemplo, em:
 
-- `ValidEquivalenceClassesTest`
-- `InvalidEquivalenceClassesTest`
-- `BusinessOutcomeCombinationsTest`
+- `TesteClassesEquivalenciaValidas`
+- `TesteClassesEquivalenciaInvalidas`
+- `TesteCombinacoesResultadosNegocio`
 
 ## Como derivar os casos
 

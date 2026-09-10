@@ -47,10 +47,10 @@ Quando uma condição não alterar o resultado de uma regra, marque-a com `-` (*
 
 ## O que desenvolver
 
-Crie um projeto Maven no diretório `classroom/06-decision-table` com esta estrutura mínima:
+Crie um projeto Maven no diretório `classroom/06-decisao-table` com esta estrutura mínima:
 
 ```text
-classroom/06-decision-table
+classroom/06-decisao-table
 ├── pom.xml
 ├── README.md
 └── src
@@ -66,18 +66,18 @@ classroom/06-decision-table
 
 Desenvolva uma classe de domínio, por exemplo:
 
-- `TravelReimbursementPolicy`
+- `PoliticaReembolsoViagem`
 
 Essa classe deve conter um método público semelhante a:
 
 ```java
-String evaluate(boolean documentacaoCompleta,
-                boolean enviadoNoPrazo,
-                boolean viagemAutorizada,
-                boolean valorAlto)
+DecisaoReembolso avaliar(boolean documentacaoCompleta,
+                         boolean enviadoNoPrazo,
+                         boolean viagemAutorizada,
+                         boolean valorAlto)
 ```
 
-Você pode usar `enum` em vez de `String`, se preferir.
+Crie o enum `DecisaoReembolso` para representar as ações possíveis.
 
 ### Parte 2: Tabela de decisão completa
 
@@ -124,8 +124,8 @@ Implemente os testes em JUnit 5. Cada coluna executável da tabela consolidada d
 
 Sugestão de organização:
 
-- `CompleteDecisionTableTest`, para a tabela de 16 combinações
-- `ConsolidatedDecisionTableTest`, para o conjunto reduzido
+- `TesteTabelaDecisaoCompleta`, para a tabela de 16 combinações
+- `TesteTabelaDecisaoConsolidada`, para o conjunto reduzido
 
 Os testes podem ser parametrizados com `@ParameterizedTest` e `@MethodSource` ou `@CsvSource`.
 
@@ -201,14 +201,14 @@ No `pom.xml`, configure:
 ### Rodar todos os testes
 
 ```bash
-cd classroom/06-decision-table
+cd classroom/06-decisao-table
 mvn test
 ```
 
 ### Gerar relatório de cobertura
 
 ```bash
-cd classroom/06-decision-table
+cd classroom/06-decisao-table
 mvn verify
 ```
 
