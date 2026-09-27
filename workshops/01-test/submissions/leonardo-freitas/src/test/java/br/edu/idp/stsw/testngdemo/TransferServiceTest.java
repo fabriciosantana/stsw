@@ -8,7 +8,8 @@ import org.testng.annotations.Test;
 
 public class TransferServiceTest {
 
-    // Cada thread recebe sua própria instância durante execuções paralelas.\n    private final ThreadLocal<TransferService> service = new ThreadLocal<>();
+    // Cada thread recebe sua própria instância durante execuções paralelas.
+    private final ThreadLocal<TransferService> service = new ThreadLocal<>();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
