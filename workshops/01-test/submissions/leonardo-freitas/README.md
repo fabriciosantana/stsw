@@ -3,78 +3,46 @@
 **Aluno:** Leonardo Freitas  
 **Disciplina:** Segurança e Teste de Software - IDP  
 **Atividade:** A1-01 - 1ª Avaliação Prática - Seminário: frameworks de automação de testes  
-**Framework apresentado:** TestNG 7.12.0  
-**Java:** 21
+**Framework:** TestNG 7.12.0  
+**Ambiente:** Java 21 + Maven
 
 ## 1. Introdução
 
-O **TestNG** é um framework de testes para Java inspirado em JUnit e NUnit. Seu objetivo é oferecer uma estrutura flexível para criação, organização e execução de testes automatizados, desde testes unitários até cenários de integração e automação de interface quando combinado com outras ferramentas.
+O **TestNG (Testing Next Generation)** é um framework/test runner para Java inspirado em JUnit e NUnit. Ele oferece mecanismos para criar, organizar e executar testes automatizados, incluindo lifecycle, testes orientados a dados, grupos, dependências, parametrização, listeners, reporters e execução paralela.
 
-O nome TestNG vem de **Testing Next Generation**. Entre seus recursos mais importantes estão:
+A ideia central deste trabalho é mostrar que o valor do TestNG não está apenas na anotação `@Test`, mas principalmente na **orquestração de uma suíte de testes que cresce**.
 
-- anotações de teste e ciclo de vida;
-- testes orientados a dados com `@DataProvider`;
-- organização por grupos;
-- dependências entre métodos e grupos;
-- parametrização;
-- execução paralela;
-- configuração de suítes com `testng.xml`;
-- listeners e reporters;
-- integração com Maven, Gradle e ferramentas de CI/CD.
+## 2. Posição na pirâmide de testes
 
-A versão utilizada neste trabalho é a **7.12.0**.
+O TestNG pode coordenar testes em diferentes níveis:
 
-## 2. Onde o TestNG se posiciona na pirâmide de testes
+- **Unidade:** Java + TestNG;
+- **Serviço/API/integração:** TestNG combinado com clientes HTTP, REST Assured, banco de dados ou mocks;
+- **UI/E2E:** TestNG combinado com Selenium ou Appium.
 
-O TestNG não está limitado a apenas um nível da pirâmide de testes. Ele atua como **framework/test runner**, podendo coordenar testes em diferentes níveis:
-
-### Base - Testes de unidade
-
-Pode testar classes e métodos Java isoladamente, de forma rápida e determinística.
-
-Exemplo neste projeto:
-
-- `TransferServiceTest`
-
-### Meio - Testes de serviço/API e integração
-
-Pode ser combinado com ferramentas como REST Assured, clientes HTTP, bancos de dados e mocks para testar integrações e serviços.
-
-### Topo - Testes de UI/E2E
-
-Pode ser utilizado em conjunto com Selenium ou Appium para organizar e executar testes de interface e ponta a ponta.
-
-Assim, o TestNG **não substitui Selenium, REST Assured ou Mockito**. Ele coordena a execução dos testes que utilizam essas ferramentas.
+TestNG **não substitui** Selenium, REST Assured ou Mockito. Ele atua como framework/test runner que organiza a execução.
 
 ## 3. Caixa-preta e caixa-branca
 
-TestNG não é, por si só, uma técnica de caixa-preta ou caixa-branca. Ele pode ser usado nas duas abordagens.
+TestNG não é uma técnica de caixa-preta nem de caixa-branca. Ele pode executar testes desenhados pelas duas abordagens.
 
-### Caixa-preta
+Neste projeto, **Boundary Value Analysis (BVA)** e **Equivalence Class Partitioning (ECP)** são usadas como técnicas de caixa-preta. O TestNG fornece os mecanismos para executar os casos produzidos por essas técnicas.
 
-O teste observa entradas e saídas sem depender da implementação interna. Neste projeto, os casos de **Boundary Value Analysis (BVA)** e **Equivalence Class Partitioning (ECP)** podem ser planejados a partir das regras externas do serviço.
+> **BVA e ECP dizem o que testar. TestNG organiza como os dados serão fornecidos, executados e avaliados.**
 
-### Caixa-branca
+## 4. Estudo de caso
 
-O framework também pode executar testes planejados a partir da estrutura do código, como testes voltados a cobertura de instruções, decisões, condições e caminhos.
+A demonstração utiliza `TransferService`.
 
-A técnica define **o que testar**. O TestNG oferece mecanismos para **organizar, executar e avaliar** esses testes.
+### Regras
 
-## 4. Estudo de caso da demonstração
+1. saldo negativo é inválido;
+2. transferência mínima: **R$ 10,00**;
+3. transferência máxima: **R$ 10.000,00**;
+4. o valor não pode ultrapassar o saldo;
+5. uma transferência válida reduz o saldo disponível.
 
-A demonstração utiliza uma classe chamada `TransferService`.
-
-Regras de negócio:
-
-1. o saldo não pode ser negativo;
-2. o valor mínimo de transferência é **R$ 10,00**;
-3. o valor máximo de transferência é **R$ 10.000,00**;
-4. a transferência não pode ultrapassar o saldo disponível;
-5. uma transferência válida reduz o saldo pelo valor transferido.
-
-Essas regras foram escolhidas porque permitem demonstrar recursos do TestNG em conjunto com técnicas estudadas na disciplina.
-
-## 5. Estrutura do projeto
+## 5. Estrutura
 
 ```text
 leonardo-freitas/
@@ -91,11 +59,9 @@ leonardo-freitas/
         └── ParallelExecutionTest.java
 ```
 
-## 6. Principais funcionalidades demonstradas
+## 6. Funcionalidades demonstradas
 
 ### 6.1 `@Test`
-
-A anotação `@Test` identifica um método que deve ser executado pelo TestNG como caso de teste.
 
 ```java
 @Test(groups = {"smoke", "regression"})
@@ -105,9 +71,9 @@ public void shouldAcceptAValidTransfer() {
 }
 ```
 
-### 6.2 Ciclo de vida - `@BeforeMethod` e `@AfterMethod`
+`@Test` identifica um método como caso de teste executável pelo TestNG.
 
-Antes de cada teste é criada uma nova instância do serviço. Depois do teste, a referência é liberada.
+### 6.2 Lifecycle
 
 ```java
 @BeforeMethod(alwaysRun = true)
@@ -121,19 +87,13 @@ public void tearDown() {
 }
 ```
 
-Isso demonstra como o TestNG controla preparação e limpeza do ambiente de testes.
+`@BeforeMethod` e `@AfterMethod` executam preparação e limpeza ao redor de cada método de teste.
 
-### 6.3 `@DataProvider`
+### 6.3 `@DataProvider` + BVA
 
-`@DataProvider` permite executar o mesmo método de teste várias vezes com conjuntos de dados diferentes.
+Fronteiras do domínio: **10** e **10.000**.
 
-Neste projeto ele é utilizado para BVA e ECP.
-
-#### BVA
-
-As fronteiras são R$ 10 e R$ 10.000:
-
-| Valor | Resultado esperado |
+| Valor | Esperado |
 |---:|:---|
 | 9 | inválido |
 | 10 | válido |
@@ -156,19 +116,19 @@ public Object[][] boundaryValues() {
 }
 ```
 
-O DataProvider não escolhe os valores por nós. A técnica **BVA determina os valores** e o TestNG fornece uma forma eficiente de executá-los.
+O mesmo método de teste é reutilizado para cada linha do DataProvider.
 
-#### ECP
+### 6.4 ECP
 
-Também são exercitadas classes de equivalência representativas:
+O projeto também usa representantes de classes de equivalência:
 
-- valores abaixo do mínimo;
-- valores válidos;
-- valores acima do máximo.
+- abaixo do mínimo: `-50`, `5`;
+- classe válida: `500`, `5000`;
+- acima do máximo: `15000`.
 
-### 6.4 Groups
+### 6.5 Groups
 
-Os casos de teste são classificados em grupos:
+Grupos presentes no exemplo:
 
 - `smoke`;
 - `regression`;
@@ -177,21 +137,17 @@ Os casos de teste são classificados em grupos:
 - `workflow`;
 - `parallel-demo`.
 
-Grupos permitem selecionar subconjuntos da suíte de acordo com o objetivo da execução.
-
 Exemplo:
 
 ```java
 @Test(groups = {"smoke", "regression"})
 ```
 
-Em um pipeline real, uma equipe poderia executar testes `smoke` a cada commit e uma regressão mais ampla em outro momento.
+Isso permite selecionar partes da suíte sem duplicar os testes.
 
-### 6.5 Dependências
+### 6.6 Dependências
 
-A classe `TransferWorkflowTest` demonstra `dependsOnMethods`.
-
-Fluxo didático:
+`TransferWorkflowTest` demonstra `dependsOnMethods`:
 
 ```text
 authenticate()
@@ -201,8 +157,6 @@ executeTransfer()
 logout()
 ```
 
-Exemplo:
-
 ```java
 @Test(dependsOnMethods = "authenticate")
 public void executeTransfer() {
@@ -210,11 +164,11 @@ public void executeTransfer() {
 }
 ```
 
-Se a dependência obrigatória falhar, o TestNG pode pular o método dependente. Dependências devem ser utilizadas com cuidado porque podem aumentar o acoplamento entre testes.
+Dependências devem ser utilizadas com cuidado, porque testes excessivamente dependentes podem aumentar o acoplamento da suíte.
 
-### 6.6 Execução paralela
+### 6.7 Paralelismo
 
-O arquivo `testng.xml` define uma suíte que pode executar métodos em paralelo:
+`testng.xml` configura paralelismo por método:
 
 ```xml
 <suite name="A1-01 TestNG Demo"
@@ -222,111 +176,91 @@ O arquivo `testng.xml` define uma suíte que pode executar métodos em paralelo:
        thread-count="3">
 ```
 
-A classe `ParallelExecutionTest` imprime a thread usada por cada cenário, tornando o paralelismo visível durante a demonstração.
+`ParallelExecutionTest` imprime a thread usada por cada cenário para tornar a execução concorrente visível.
 
 ## 7. `testng.xml`
 
-O arquivo XML funciona como uma configuração de orquestração da suíte. Ele pode definir, entre outros elementos:
+O XML é usado para orquestrar a suíte e pode definir classes, grupos, parâmetros e paralelismo.
 
-- suites;
-- testes;
-- classes;
-- grupos;
-- parâmetros;
-- paralelismo.
+Neste projeto ele reúne as classes de demonstração e ativa três threads para execução paralela por método.
 
-Neste projeto ele reúne as três classes de teste e configura execução paralela por método com três threads.
+## 8. TestNG x JUnit moderno
 
-## 8. TestNG x JUnit
-
-JUnit e TestNG possuem hoje grande sobreposição funcional. A comparação correta não é afirmar que um framework é sempre superior ao outro.
+JUnit e TestNG possuem hoje bastante sobreposição.
 
 | Recurso | TestNG | JUnit moderno |
 |---|---|---|
 | Testes unitários | Sim | Sim |
 | Assertions | Sim | Sim |
-| Testes parametrizados | `@DataProvider` | `@ParameterizedTest` |
+| Parametrização | `@DataProvider` | `@ParameterizedTest` |
 | Agrupamento | `groups` | `@Tag` |
-| Ciclo de vida | Sim | Sim |
-| Dependências declarativas entre testes | Recurso nativo | Sem equivalente direto simples |
-| Execução paralela | Sim | Sim |
-| Configuração explícita de suíte por XML | Forte suporte com `testng.xml` | Abordagem diferente |
-| Maven/Gradle | Sim | Sim |
-| Selenium/API | Pode coordenar | Pode coordenar |
+| Lifecycle | Sim | Sim |
+| Dependências declarativas | Nativo | Sem equivalente direto simples |
+| Paralelismo | Sim | Sim |
+| Configuração explícita de suíte | `testng.xml` | abordagem diferente |
 
-### Quando TestNG pode ser especialmente interessante
+A escolha correta depende do contexto. TestNG é especialmente interessante quando a suíte se beneficia de **DataProvider, groups, dependencies, configuração explícita e paralelismo**. Projetos já padronizados em JUnit podem não ganhar nada ao trocar apenas por trocar.
 
-- suítes Java grandes;
-- forte uso de testes orientados a dados;
-- necessidade de grupos e seleção dinâmica de suítes;
-- dependências controladas entre cenários;
-- configuração explícita da execução;
-- execução paralela configurável.
+## 9. Frameworks e ferramentas similares ou complementares
 
-### Quando JUnit pode ser suficiente ou preferível
-
-- projetos já padronizados em JUnit;
-- suítes menores e simples;
-- equipes que não precisam dos recursos específicos de orquestração do TestNG;
-- ecossistemas em que JUnit já é o padrão consolidado.
-
-## 9. Frameworks e ferramentas relacionadas
-
-Ferramentas que podem ser consideradas alternativas ou complementares, dependendo da camada de teste:
-
-- **JUnit** - principal framework de testes do ecossistema Java;
-- **Spock** - framework de testes para JVM, especialmente associado a Groovy;
-- **Selenium** - automação de navegadores, normalmente combinado com um test runner;
+- **JUnit** - framework de testes Java;
+- **Spock** - testes na JVM com forte associação ao Groovy;
+- **Selenium** - automação de navegadores;
 - **REST Assured** - testes de APIs HTTP em Java;
-- **Mockito** - criação de mocks e doubles de teste.
+- **Mockito** - mocks e test doubles.
 
 ## 10. Vantagens
 
-- DataProvider simples e poderoso;
+- DataProvider para testes data-driven;
 - organização por grupos;
 - dependências declarativas;
 - configuração flexível de suítes;
 - execução paralela;
 - listeners e reporters;
-- integração com Maven e Gradle;
-- aplicável a diferentes níveis da pirâmide quando combinado com outras ferramentas.
+- integração com Maven/Gradle e CI/CD;
+- aplicável em diferentes camadas quando combinado com outras ferramentas.
 
 ## 11. Desvantagens e cuidados
 
-- possui sobreposição significativa com JUnit moderno;
-- dependências mal utilizadas podem tornar a suíte frágil;
-- paralelismo exige cuidado com estado compartilhado e thread safety;
-- `testng.xml` e outras configurações podem ser excesso de complexidade para projetos pequenos;
-- a escolha deve respeitar os padrões já adotados pela equipe e pelo projeto.
+- sobreposição significativa com JUnit moderno;
+- dependências podem acoplar testes;
+- paralelismo exige isolamento e thread safety;
+- configuração pode ser excessiva para projetos pequenos;
+- a adoção deve respeitar padrões e necessidades da equipe.
 
-## 12. Casos de uso
+## 12. Casos reais
 
-TestNG é apropriado para cenários como:
+Em vez de citar empresas sem evidência pública, foram verificados projetos open source reais:
 
-- regressões automatizadas em projetos Java;
-- testes data-driven;
-- automação web combinada com Selenium;
-- testes de API combinados com bibliotecas HTTP;
-- suites organizadas em grupos `smoke`, `regression` e outros;
-- pipelines CI/CD que precisam selecionar ou paralelizar subconjuntos de testes.
+### Apache Atlas
 
-## 13. Validação realizada
+O repositório do **Apache Atlas** possui diversos módulos que declaram `org.testng:testng` em seus arquivos Maven, incluindo módulos com escopo de teste.
 
-Antes da entrega, o projeto foi validado em ambiente GitHub Actions com **Java 21**.
+Fonte: https://github.com/apache/atlas
 
-Foram executados com sucesso:
+### Apache BifroMQ
+
+A suíte de testes do **Apache BifroMQ** também inclui `org.testng:testng` entre suas dependências.
+
+Fonte: https://github.com/apache/bifromq
+
+Esses exemplos demonstram uso verificável do TestNG em projetos Java reais de código aberto.
+
+## 13. Validação do projeto
+
+O projeto foi executado em **GitHub Actions com Java 21**.
+
+Executados com sucesso:
 
 ```bash
 mvn -B test
 ```
 
-E a suíte configurada pelo `testng.xml`:
-
 ```bash
 mvn -B -Psuite test
 ```
 
-Os dois comandos finalizaram com sucesso.
+A validação incluiu a execução padrão e a suíte definida por `testng.xml` com paralelismo.
 
 ## 14. Como executar
 
@@ -335,70 +269,73 @@ Os dois comandos finalizaram com sucesso.
 - Java 21;
 - Maven 3.x.
 
-Verificar instalação:
-
 ```bash
 java -version
 mvn -version
 ```
 
-### Executar todos os testes normalmente
+Entre no diretório da submissão:
 
-Na pasta `workshops/01-test/submissions/leonardo-freitas`:
+```bash
+cd workshops/01-test/submissions/leonardo-freitas
+```
+
+### Todos os testes
 
 ```bash
 mvn test
 ```
 
-### Executar a suíte `testng.xml` com paralelismo
-
-```bash
-mvn -Psuite test
-```
-
-### Executar somente o grupo smoke
+### Grupo smoke
 
 ```bash
 mvn -Dgroups=smoke test
 ```
 
-### Executar somente BVA
+### BVA
 
 ```bash
 mvn -Dgroups=bva test
 ```
 
-### Executar somente ECP
+### ECP
 
 ```bash
 mvn -Dgroups=ecp test
 ```
 
-## 15. Roteiro curto da demonstração
+### Suíte XML com paralelismo
+
+```bash
+mvn -Psuite test
+```
+
+## 15. Roteiro da demonstração
 
 1. abrir `TransferService.java` e explicar as regras;
-2. abrir `TransferServiceTest.java` e mostrar um `@Test` simples;
+2. mostrar um `@Test` simples;
 3. mostrar `@BeforeMethod` e `@AfterMethod`;
 4. explicar `@DataProvider` com BVA;
-5. relacionar os valores 9, 10, 11 e 9999, 10000, 10001 às fronteiras;
-6. mostrar ECP;
-7. mostrar os `groups`;
-8. abrir `TransferWorkflowTest.java` e explicar `dependsOnMethods`;
-9. abrir `testng.xml` e destacar `parallel="methods"` e `thread-count="3"`;
-10. executar `mvn test`;
-11. executar `mvn -Psuite test` e observar as threads no terminal.
+5. mostrar ECP;
+6. mostrar os `groups`;
+7. abrir `TransferWorkflowTest.java` e explicar `dependsOnMethods`;
+8. abrir `testng.xml` e destacar `parallel="methods"` e `thread-count="3"`;
+9. executar `mvn test`;
+10. executar `mvn -Psuite test` e observar as threads no terminal.
 
 ## 16. Conclusão
 
-TestNG é mais do que uma forma de colocar `@Test` sobre um método. Seu principal valor aparece na **organização e orquestração de suítes**, oferecendo recursos claros para testes orientados a dados, grupos, dependências e paralelismo.
+TestNG é mais do que uma anotação para executar testes. Seu principal diferencial aparece na **organização e orquestração da suíte**.
 
-Neste estudo de caso, o framework foi conectado às técnicas vistas na disciplina. **BVA e ECP determinam quais casos devem ser testados; o TestNG oferece os mecanismos para fornecer os dados, organizar a suíte, executar os casos e verificar os resultados.**
+Neste estudo de caso, técnicas de projeto de testes foram conectadas ao framework: **BVA e ECP definem quais casos são importantes; TestNG oferece mecanismos para fornecer dados, agrupar, ordenar e executar esses casos, inclusive em paralelo**.
 
-A adoção de TestNG deve ser uma decisão de engenharia: ele é especialmente útil quando seus recursos de orquestração resolvem problemas reais da suíte, mas não deve ser adotado apenas por possuir mais opções de configuração.
+A adoção deve ser uma decisão de engenharia. O framework é especialmente útil quando seus recursos resolvem problemas reais de organização e escala, e não apenas por oferecer mais opções de configuração.
 
 ## Referências
 
 - TestNG Documentation: https://testng.org/documentation.html
-- TestNG - Maven: https://testng.org/maven
-- TestNG releases: https://github.com/testng-team/testng/releases
+- TestNG + Maven: https://testng.org/maven
+- TestNG Releases: https://github.com/testng-team/testng/releases
 - JUnit User Guide: https://docs.junit.org/
+- Apache Atlas: https://github.com/apache/atlas
+- Apache BifroMQ: https://github.com/apache/bifromq
