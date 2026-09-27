@@ -36,7 +36,7 @@ public class TransferWorkflowTest {
         TransferService service = new TransferService();
         double balance = service.transfer(1_000.00, 100.00);
 
-        Assert.assertEquals(balance, 900.00);
+        Assert.assertEquals(balance, 900.00, 0.001);
         transferCompleted.set(true);
     }
 
