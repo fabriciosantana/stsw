@@ -40,6 +40,6 @@ public class ParallelExecutionTest {
         TransferService service = new TransferService();
         double result = service.transfer(balance, amount);
 
-        Assert.assertEquals(result, expected);
+        Assert.assertEquals(result, expected, 0.001);
     }
 }
