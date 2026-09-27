@@ -38,7 +38,7 @@ public class TransferServiceTest {
     public void shouldUpdateBalanceAfterTransfer() {
         double remainingBalance = service.transfer(5_000.00, 1_000.00);
 
-        Assert.assertEquals(remainingBalance, 4_000.00);
+        Assert.assertEquals(remainingBalance, 4_000.00, 0.001);
     }
 
     @DataProvider(name = "boundaryValues")
