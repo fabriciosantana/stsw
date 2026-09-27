@@ -8,35 +8,35 @@ import org.testng.annotations.Test;
 
 public class TransferServiceTest {
 
-    private TransferService service;
+    // Cada thread recebe sua própria instância durante execuções paralelas.\n    private final ThreadLocal<TransferService> service = new ThreadLocal<>();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        service = new TransferService();
+        service.set(new TransferService());
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        service = null;
+        service.remove();
     }
 
     @Test(groups = {"smoke", "regression"})
     public void shouldAcceptAValidTransfer() {
-        boolean result = service.isValid(5_000.00, 1_000.00);
+        boolean result = service.get().isValid(5_000.00, 1_000.00);
 
         Assert.assertTrue(result);
     }
 
     @Test(groups = {"regression"})
     public void shouldRejectTransferGreaterThanBalance() {
-        boolean result = service.isValid(500.00, 1_000.00);
+        boolean result = service.get().isValid(500.00, 1_000.00);
 
         Assert.assertFalse(result);
     }
 
     @Test(groups = {"regression"})
     public void shouldUpdateBalanceAfterTransfer() {
-        double remainingBalance = service.transfer(5_000.00, 1_000.00);
+        double remainingBalance = service.get().transfer(5_000.00, 1_000.00);
 
         Assert.assertEquals(remainingBalance, 4_000.00, 0.001);
     }
@@ -61,7 +61,7 @@ public class TransferServiceTest {
             double amount,
             boolean expected
     ) {
-        boolean result = service.isValid(20_000.00, amount);
+        boolean result = service.get().isValid(20_000.00, amount);
 
         Assert.assertEquals(
                 result,
@@ -90,7 +90,7 @@ public class TransferServiceTest {
             boolean expected
     ) {
         Assert.assertEquals(
-                service.isValid(20_000.00, amount),
+                service.get().isValid(20_000.00, amount),
                 expected
         );
     }
