@@ -66,7 +66,7 @@ leonardo-freitas/
 ```java
 @Test(groups = {"smoke", "regression"})
 public void shouldAcceptAValidTransfer() {
-    boolean result = service.isValid(5_000.00, 1_000.00);
+    boolean result = service.get().isValid(5_000.00, 1_000.00);
     Assert.assertTrue(result);
 }
 ```
@@ -76,18 +76,20 @@ public void shouldAcceptAValidTransfer() {
 ### 6.2 Lifecycle
 
 ```java
+private final ThreadLocal<TransferService> service = new ThreadLocal<>();
+
 @BeforeMethod(alwaysRun = true)
 public void setUp() {
-    service = new TransferService();
+    service.set(new TransferService());
 }
 
 @AfterMethod(alwaysRun = true)
 public void tearDown() {
-    service = null;
+    service.remove();
 }
 ```
 
-`@BeforeMethod` e `@AfterMethod` executam preparação e limpeza ao redor de cada método de teste.
+`@BeforeMethod` e `@AfterMethod` executam preparação e limpeza ao redor de cada método de teste. Neste exemplo, `ThreadLocal` garante que cada thread receba sua própria instância durante a execução paralela.
 
 ### 6.3 `@DataProvider` + BVA
 
@@ -177,6 +179,18 @@ Dependências devem ser utilizadas com cuidado, porque testes excessivamente dep
 ```
 
 `ParallelExecutionTest` imprime a thread usada por cada cenário para tornar a execução concorrente visível.
+
+### 6.8 Thread safety na execução paralela
+
+Durante a validação do projeto, a primeira versão da fixture compartilhava uma referência de `TransferService`. Em execução paralela isso poderia causar interferência entre threads.
+
+A solução foi usar:
+
+```java
+private final ThreadLocal<TransferService> service = new ThreadLocal<>();
+```
+
+Assim, cada thread recebe sua própria instância. Esse ajuste demonstra um cuidado importante: **paralelismo exige isolamento de estado e thread safety**.
 
 ## 7. `testng.xml`
 
