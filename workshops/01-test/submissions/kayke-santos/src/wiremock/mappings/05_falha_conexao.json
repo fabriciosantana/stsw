@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/falha-critica"
+  },
+  "response": {
+    "fault": "CONNECTION_RESET_BY_PEER"
+  }
+}
