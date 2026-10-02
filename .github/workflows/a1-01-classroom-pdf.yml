@@ -1,0 +1,279 @@
+name: Replace A1-01 PDF with classroom presentation
+
+on:
+  push:
+    branches:
+      - a1-01-testng
+    paths:
+      - '.github/workflows/a1-01-classroom-pdf.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ReportLab
+        run: pip install reportlab
+
+      - name: Build classroom presentation PDF
+        run: |
+          python - <<'PY'
+          from reportlab.pdfgen import canvas
+          from reportlab.lib.pagesizes import landscape
+          from reportlab.lib.colors import HexColor, white
+          from reportlab.pdfbase.pdfmetrics import stringWidth
+          import textwrap, os
+
+          OUT = "workshops/01-test/submissions/leonardo-freitas/leonardo-freitas.pdf"
+          W, H = 960, 540
+
+          BG = HexColor("#0B1220")
+          PANEL = HexColor("#111C31")
+          PANEL2 = HexColor("#16243D")
+          ACCENT = HexColor("#42D3A6")
+          BLUE = HexColor("#65B7FF")
+          ORANGE = HexColor("#FFB65C")
+          RED = HexColor("#FF6B6B")
+          TEXT = HexColor("#F4F7FB")
+          MUTED = HexColor("#A9B7C9")
+          LINE = HexColor("#283854")
+          CODEBG = HexColor("#07101E")
+
+          c = canvas.Canvas(OUT, pagesize=(W,H))
+          c.setTitle("TestNG — Seminário de Automação de Testes — Leonardo Freitas")
+          c.setAuthor("Leonardo Freitas")
+
+          def bg():
+              c.setFillColor(BG); c.rect(0,0,W,H,fill=1,stroke=0)
+              c.setFillColor(ACCENT); c.rect(0,H-6,W,6,fill=1,stroke=0)
+
+          def txt(x,y,s,size=22,color=TEXT,font="Helvetica",maxw=None,leading=None):
+              c.setFillColor(color); c.setFont(font,size)
+              if not maxw:
+                  c.drawString(x,y,s); return
+              if leading is None: leading=size*1.25
+              words=s.split()
+              line=""
+              yy=y
+              for w in words:
+                  t=(line+" "+w).strip()
+                  if stringWidth(t,font,size) <= maxw:
+                      line=t
+                  else:
+                      c.drawString(x,yy,line); yy-=leading; line=w
+              if line: c.drawString(x,yy,line)
+
+          def title(kicker, head, sub=None):
+              bg()
+              txt(56,486,kicker.upper(),13,ACCENT,"Helvetica-Bold")
+              txt(56,430,head,34,TEXT,"Helvetica-Bold",840,42)
+              if sub: txt(56,374,sub,18,MUTED,"Helvetica",840,24)
+
+          def pill(x,y,label,color=ACCENT,w=None):
+              if w is None: w=max(90,stringWidth(label,"Helvetica-Bold",13)+28)
+              c.setFillColor(color); c.roundRect(x,y,w,30,15,fill=1,stroke=0)
+              c.setFillColor(BG); c.setFont("Helvetica-Bold",13)
+              c.drawCentredString(x+w/2,y+9,label)
+
+          def box(x,y,w,h,head,body="",accent=ACCENT):
+              c.setFillColor(PANEL); c.roundRect(x,y,w,h,14,fill=1,stroke=0)
+              c.setFillColor(accent); c.roundRect(x,y,w,6,3,fill=1,stroke=0)
+              txt(x+20,y+h-38,head,18,TEXT,"Helvetica-Bold",w-40,22)
+              if body: txt(x+20,y+h-70,body,14,MUTED,"Helvetica",w-40,19)
+
+          def code(x,y,w,h,lines):
+              c.setFillColor(CODEBG); c.roundRect(x,y,w,h,12,fill=1,stroke=0)
+              yy=y+h-28
+              for line,col in lines:
+                  txt(x+18,yy,line,13,col,"Courier")
+                  yy-=20
+
+          def footer(n):
+              txt(56,22,"A1-01 • Segurança e Teste de Software • IDP",10,MUTED)
+              txt(872,22,f"{n:02d}",10,MUTED,"Helvetica-Bold")
+
+          def show(n):
+              footer(n); c.showPage()
+
+          # 1
+          bg()
+          pill(56,450,"A1-01 • SEMINÁRIO",ACCENT,150)
+          txt(56,355,"TestNG",52,TEXT,"Helvetica-Bold")
+          txt(56,309,"Automação, organização e execução de testes em Java",21,MUTED)
+          txt(56,220,"Leonardo Freitas",20,TEXT,"Helvetica-Bold")
+          txt(56,190,"Segurança e Teste de Software • IDP",15,MUTED)
+          box(610,150,280,245,"O foco da apresentação","Como o TestNG ajuda quando a suíte cresce: dados, grupos, dependências e paralelismo.",BLUE)
+          show(1)
+
+          # 2
+          title("Contexto","O problema não é escrever 1 teste. É organizar 1.000.","Uma suíte grande precisa de regras claras de execução.")
+          box(56,190,250,125,"1. Repetição","O mesmo cenário precisa ser executado com muitos dados.",ACCENT)
+          box(355,190,250,125,"2. Organização","Nem sempre queremos rodar todos os testes.",BLUE)
+          box(654,190,250,125,"3. Escala","A execução pode precisar acontecer em paralelo.",ORANGE)
+          txt(56,120,"TestNG entra como framework/test runner para coordenar essa execução.",20,TEXT,"Helvetica-Bold",840,26)
+          show(2)
+
+          # 3
+          title("Conceito","O que é TestNG?","Testing Next Generation — framework de testes para Java.")
+          box(56,215,190,120,"Test runner","Descobre e executa métodos marcados como teste.",ACCENT)
+          box(270,215,190,120,"Lifecycle","Prepara e limpa o ambiente dos testes.",BLUE)
+          box(484,215,190,120,"Data-driven","Executa o mesmo teste com vários dados.",ORANGE)
+          box(698,215,190,120,"Orquestração","Groups, dependencies e paralelismo.",ACCENT)
+          txt(56,135,"TestNG não é Selenium e não é uma técnica de teste.",18,TEXT,"Helvetica-Bold")
+          txt(56,105,"Ele organiza COMO os testes serão executados.",18,MUTED)
+          show(3)
+
+          # 4
+          title("Pirâmide","Onde o TestNG pode ser usado?","Ele pode coordenar testes em diferentes níveis.")
+          box(340,315,280,75,"UI / E2E","TestNG + Selenium / Appium",ORANGE)
+          box(285,215,390,75,"Serviço / API / Integração","TestNG + REST Assured / clientes HTTP",BLUE)
+          box(220,115,520,75,"Unidade","Java + TestNG",ACCENT)
+          show(4)
+
+          # 5
+          title("Estudo de caso","Nosso sistema: TransferService","Um exemplo simples para concentrar a atenção no framework.")
+          box(56,190,255,150,"Regra 1","Transferência mínima: R$ 10,00",ACCENT)
+          box(352,190,255,150,"Regra 2","Transferência máxima: R$ 10.000,00",BLUE)
+          box(648,190,255,150,"Regra 3","O valor não pode ultrapassar o saldo.",ORANGE)
+          txt(56,125,"Sistema simples → testes fáceis de entender → recursos do TestNG ficam visíveis.",18,MUTED)
+          show(5)
+
+          # 6
+          title("@Test","A anatomia de um teste simples","O TestNG encontra o método, executa e verifica a asserção.")
+          code(56,175,848,200,[
+              ('@Test(groups = {"smoke", "regression"})',ACCENT),
+              ('public void shouldAcceptAValidTransfer() {',TEXT),
+              ('    boolean result = service.get().isValid(5000, 1000);',BLUE),
+              ('    Assert.assertTrue(result);',ORANGE),
+              ('}',TEXT),
+          ])
+          txt(56,125,"@Test = “este método é um caso de teste”.",18,MUTED)
+          show(6)
+
+          # 7
+          title("Data-driven","@DataProvider + Boundary Value Analysis","A técnica escolhe os valores. O TestNG fornece os dados ao teste.")
+          vals=[("9","inválido",RED),("10","válido",ACCENT),("11","válido",ACCENT),("9999","válido",ACCENT),("10000","válido",ACCENT),("10001","inválido",RED)]
+          x=56
+          for v,st,col in vals:
+              box(x,220,125,105,v,st,col); x+=140
+          txt(56,155,"BVA testa a vizinhança das fronteiras: abaixo, no limite e acima.",18,TEXT,"Helvetica-Bold")
+          txt(56,120,"Limites usados: 10 e 10.000.",16,MUTED)
+          show(7)
+
+          # 8
+          title("Técnica","ECP — Particionamento de Equivalência","Em vez de testar infinitos valores, escolhemos representantes de classes.")
+          box(56,205,255,135,"Abaixo do mínimo","-50, 5 → inválidos",RED)
+          box(352,205,255,135,"Classe válida","500, 5.000 → válidos",ACCENT)
+          box(648,205,255,135,"Acima do máximo","15.000 → inválido",ORANGE)
+          txt(56,130,"ECP escolhe O QUE testar. TestNG organiza COMO executar.",20,TEXT,"Helvetica-Bold")
+          show(8)
+
+          # 9
+          title("Organização","Groups: execute apenas o que interessa","Os testes podem pertencer a diferentes conjuntos.")
+          pill(80,280,"smoke",ACCENT,125)
+          pill(235,280,"regression",BLUE,145)
+          pill(410,280,"bva",ORANGE,110)
+          pill(550,280,"ecp",ACCENT,110)
+          pill(690,280,"workflow",BLUE,125)
+          code(145,155,670,80,[("mvn -Dgroups=smoke test",TEXT)])
+          txt(56,105,"Útil em CI/CD: smoke em commits rápidos; regressão em execuções mais completas.",16,MUTED, "Helvetica", 840,22)
+          show(9)
+
+          # 10
+          title("Fluxo","Dependencies: um teste pode depender de outro","TestNG possui dependências declarativas entre métodos.")
+          pill(110,260,"authenticate()",ACCENT,190)
+          txt(325,268,"→",30,MUTED,"Helvetica-Bold")
+          pill(385,260,"executeTransfer()",BLUE,200)
+          txt(610,268,"→",30,MUTED,"Helvetica-Bold")
+          pill(670,260,"logout()",ORANGE,150)
+          code(180,150,600,70,[('@Test(dependsOnMethods = "authenticate")',ACCENT)])
+          txt(56,105,"Cuidado: dependências demais aumentam o acoplamento entre testes.",17,MUTED)
+          show(10)
+
+          # 11
+          title("Escala","Paralelismo: três métodos ao mesmo tempo","O testng.xml controla a estratégia de execução.")
+          code(56,230,455,120,[
+              ('<suite',TEXT),
+              ('  parallel="methods"',ACCENT),
+              ('  thread-count="3">',BLUE),
+          ])
+          box(555,230,350,120,"Thread safety","Cada thread precisa trabalhar com estado isolado.",ORANGE)
+          txt(56,160,"No projeto usamos ThreadLocal<TransferService> para evitar interferência entre threads.",18,TEXT,"Helvetica-Bold",840,24)
+          txt(56,115,"Paralelismo sem isolamento pode criar race conditions.",16,MUTED)
+          show(11)
+
+          # 12
+          title("Demo","Demonstração ao vivo — sequência de 5 minutos","A ideia é mostrar poucos pontos, mas todos funcionando.")
+          steps=[
+              ("1","TransferService","regras"),
+              ("2","TransferServiceTest","@Test + DataProvider"),
+              ("3","TransferWorkflowTest","dependencies"),
+              ("4","testng.xml","parallel + threads"),
+          ]
+          x=56
+          for n,h,b in steps:
+              box(x,230,195,110,f"{n}. {h}",b,ACCENT if n in ("1","3") else BLUE); x+=215
+          code(190,125,580,72,[("mvn test",TEXT),("mvn -Psuite test",ACCENT)])
+          show(12)
+
+          # 13
+          title("Comparação","TestNG × JUnit moderno","Os dois são maduros. A escolha depende do projeto.")
+          headers=["Recurso","TestNG","JUnit"]
+          rows=[
+              ("Testes unitários","✓","✓"),
+              ("Parametrização","@DataProvider","@ParameterizedTest"),
+              ("Agrupamento","groups","@Tag"),
+              ("Paralelismo","✓","✓"),
+              ("Dependências","nativo","sem equivalente direto"),
+              ("Suite XML","forte","abordagem diferente"),
+          ]
+          x=[56,385,635]; widths=[310,230,270]
+          for i,h in enumerate(headers): box(x[i],345,widths[i],50,h,"",ACCENT)
+          yy=310
+          for r in rows:
+              c.setFillColor(PANEL2); c.rect(56,yy-29,849,31,fill=1,stroke=0)
+              txt(68,yy-20,r[0],14,TEXT); txt(400,yy-20,r[1],14,MUTED); txt(650,yy-20,r[2],14,MUTED)
+              yy-=34
+          show(13)
+
+          # 14
+          title("Avaliação crítica","Vantagens e cuidados","Recursos fortes também criam responsabilidades.")
+          box(56,195,395,175,"Vantagens","• DataProvider\n• Groups\n• Dependencies\n• Suite XML\n• Paralelismo",ACCENT)
+          box(509,195,395,175,"Cuidados","• Configuração adicional\n• Testes podem ficar acoplados\n• Paralelismo exige thread safety\n• Há sobreposição com JUnit",ORANGE)
+          show(14)
+
+          # 15
+          title("Conclusão","O que este estudo de caso demonstrou","TestNG ganha valor quando a suíte precisa de organização e escala.")
+          box(56,205,255,135,"Técnica","BVA + ECP definem casos importantes.",ACCENT)
+          box(352,205,255,135,"Framework","TestNG executa, agrupa e parametriza.",BLUE)
+          box(648,205,255,135,"Escala","Dependencies + parallel organizam a suíte.",ORANGE)
+          txt(56,125,"BVA e ECP dizem O QUE testar. TestNG ajuda a decidir COMO executar.",20,TEXT,"Helvetica-Bold",840,26)
+          show(15)
+
+          # 16
+          bg()
+          txt(56,455,"PERGUNTAS",13,ACCENT,"Helvetica-Bold")
+          txt(56,370,"Obrigado.",48,TEXT,"Helvetica-Bold")
+          txt(56,320,"Leonardo Freitas • TestNG 7.12.0",18,MUTED)
+          box(56,135,848,120,"Referências","testng.org/documentation.html  •  github.com/testng-team/testng  •  docs.junit.org  •  Apache Atlas  •  Apache BifroMQ",BLUE)
+          show(16)
+
+          c.save()
+          print(f"PDF criado: {OUT} ({os.path.getsize(OUT)} bytes)")
+          PY
+
+      - name: Commit classroom PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add workshops/01-test/submissions/leonardo-freitas/leonardo-freitas.pdf
+          git commit -m "A1-01 TestNG: use classroom presentation PDF"
+          git push
