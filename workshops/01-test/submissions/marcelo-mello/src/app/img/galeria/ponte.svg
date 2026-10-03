@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDE2C8"/><stop offset="1" stop-color="#F8B88B"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#c)"/>
+<rect x="0" y="400" width="800" height="200" fill="#5C8DB8"/>
+<g fill="#7FA9CF"><rect x="60" y="440" width="120" height="5" rx="2"/><rect x="300" y="480" width="180" height="5" rx="2"/><rect x="560" y="450" width="140" height="5" rx="2"/></g>
+<g stroke="#C0392B" stroke-width="12" fill="none" stroke-linecap="round"><path d="M40 360 Q 220 120 400 360"/><path d="M400 360 Q 580 120 760 360"/></g>
+<g stroke="#C0392B" stroke-width="3"><line x1="100" y1="300" x2="100" y2="360"/><line x1="160" y1="250" x2="160" y2="360"/><line x1="220" y1="238" x2="220" y2="360"/><line x1="280" y1="250" x2="280" y2="360"/><line x1="340" y1="300" x2="340" y2="360"/><line x1="460" y1="300" x2="460" y2="360"/><line x1="520" y1="250" x2="520" y2="360"/><line x1="580" y1="238" x2="580" y2="360"/><line x1="640" y1="250" x2="640" y2="360"/><line x1="700" y1="300" x2="700" y2="360"/></g>
+<rect x="0" y="356" width="800" height="18" fill="#8E2A20"/>
+<g fill="#8E2A20"><rect x="380" y="220" width="40" height="300"/><rect x="20" y="300" width="36" height="220"/><rect x="744" y="300" width="36" height="220"/></g>
+</svg>

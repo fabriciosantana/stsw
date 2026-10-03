@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IDP Tarefas</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topo">
+    <span class="logo" aria-hidden="true">✓</span>
+    <strong>IDP Tarefas</strong>
+    <button id="botao-menu" type="button" class="link" aria-expanded="false" aria-controls="menu-principal" hidden>Menu</button>
+    <nav id="menu-principal" aria-label="Principal" hidden>
+      <a href="#tarefas">Tarefas</a>
+      <a href="#kanban">Kanban</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#foco">Foco</a>
+    </nav>
+    <button id="botao-sair" type="button" class="link" hidden>Sair</button>
+  </header>
+
+  <main>
+    <!-- ================= TELA DE LOGIN ================= -->
+    <section id="tela-login" class="cartao" aria-labelledby="titulo-login">
+      <h1 id="titulo-login">Entrar</h1>
+      <p class="dica">Use <code>aluno@idp.edu.br</code> / <code>playwright123</code></p>
+
+      <form id="form-login" novalidate>
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="username">
+
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" autocomplete="current-password">
+
+        <button id="botao-entrar" type="submit">Entrar</button>
+        <p id="erro-login" class="erro" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <!-- ================= ÁREA LOGADA ================= -->
+    <div id="area-logada" hidden>
+      <h1 id="saudacao">Olá!</h1>
+
+      <!-- ---------- TAREFAS ---------- -->
+      <section id="pagina-tarefas" class="pagina" aria-label="Tarefas">
+        <div class="grade">
+          <section class="cartao" aria-labelledby="titulo-tarefas">
+            <h2 id="titulo-tarefas">Minhas tarefas</h2>
+
+            <form id="form-tarefa" class="linha" novalidate>
+              <label for="nova-tarefa" class="oculto">Nova tarefa</label>
+              <input id="nova-tarefa" type="text" placeholder="O que precisa ser feito?">
+              <button type="submit">Adicionar</button>
+            </form>
+            <p id="erro-tarefa" class="erro" role="alert" hidden></p>
+
+            <ul id="lista-tarefas" aria-label="Lista de tarefas"></ul>
+            <p id="contador" data-testid="contador" aria-live="polite">Nenhuma tarefa pendente</p>
+          </section>
+
+          <section class="cartao" aria-labelledby="titulo-produtos">
+            <h2 id="titulo-produtos">Loja do aluno</h2>
+            <p id="carregando-produtos">Carregando produtos…</p>
+            <ul id="lista-produtos" aria-label="Produtos"></ul>
+            <p id="erro-produtos" class="erro" role="alert" hidden></p>
+          </section>
+        </div>
+      </section>
+
+      <!-- ---------- KANBAN ---------- -->
+      <section id="pagina-kanban" class="pagina" aria-labelledby="titulo-kanban" hidden>
+        <div class="cabecalho-pagina">
+          <h2 id="titulo-kanban">Quadro Kanban</h2>
+          <div class="acoes">
+            <form id="form-cartao" class="linha" novalidate>
+              <label for="novo-cartao" class="oculto">Novo cartão</label>
+              <input id="novo-cartao" type="text" placeholder="Novo cartão">
+              <button type="submit">Criar cartão</button>
+            </form>
+            <button id="botao-exportar" type="button" class="secundario">Exportar CSV</button>
+          </div>
+        </div>
+        <p class="dica">Arraste os cartões entre as colunas (ou use as setas).</p>
+        <div id="quadro" class="quadro"></div>
+      </section>
+
+      <!-- ---------- GALERIA ---------- -->
+      <section id="pagina-galeria" class="pagina" aria-labelledby="titulo-galeria" hidden>
+        <div class="cabecalho-pagina">
+          <h2 id="titulo-galeria">Galeria</h2>
+          <div class="acoes">
+            <label for="enviar-foto" class="botao-arquivo">Enviar foto</label>
+            <input id="enviar-foto" type="file" accept="image/*" class="oculto">
+          </div>
+        </div>
+        <p id="erro-upload" class="erro" role="alert" hidden></p>
+        <p id="info-upload" class="sucesso" role="status" hidden></p>
+
+        <div id="filtros" class="filtros" role="group" aria-label="Filtrar por categoria"></div>
+        <div id="grade-fotos" class="grade-fotos" data-testid="galeria"></div>
+        <p id="sem-fotos" class="dica" hidden>Nenhuma foto nesta categoria.</p>
+
+        <dialog id="visualizador" aria-labelledby="legenda-visualizador">
+          <img id="imagem-grande" alt="">
+          <div class="rodape-visualizador">
+            <p id="legenda-visualizador"></p>
+            <div class="acoes">
+              <button type="button" id="botao-anterior" class="secundario">Anterior</button>
+              <button type="button" id="botao-proxima" class="secundario">Próxima</button>
+              <a id="link-original" href="#" target="_blank" rel="noopener">Abrir original</a>
+              <button type="button" id="botao-fechar">Fechar</button>
+            </div>
+          </div>
+        </dialog>
+      </section>
+
+      <!-- ---------- FOCO (POMODORO) ---------- -->
+      <section id="pagina-foco" class="pagina" aria-labelledby="titulo-foco" hidden>
+        <div class="cartao foco">
+          <h2 id="titulo-foco">Modo foco</h2>
+          <p id="fase" class="fase" data-testid="fase">Foco</p>
+          <p id="tempo" class="tempo" role="timer" aria-label="Tempo restante">25:00</p>
+          <div class="acoes centro">
+            <button type="button" id="botao-iniciar">Iniciar</button>
+            <button type="button" id="botao-pausar" class="secundario" disabled>Pausar</button>
+            <button type="button" id="botao-zerar" class="secundario">Zerar</button>
+          </div>
+          <p id="ciclos" data-testid="ciclos">Ciclos concluídos: 0</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="aviso" class="aviso" role="status" aria-live="polite" hidden></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
