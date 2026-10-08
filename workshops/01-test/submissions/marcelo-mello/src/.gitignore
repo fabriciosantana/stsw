@@ -1,0 +1,9 @@
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+.playwright-mcp/
+
+# Gerados na máquina de quem roda (npm run setup / demo do MCP)
+tests/__screenshots__/
+tests/gerados-pela-ia/

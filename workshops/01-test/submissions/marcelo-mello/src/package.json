@@ -1,0 +1,39 @@
+{
+  "name": "seminario-playwright",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Seminário A1-01 — Playwright + Playwright MCP: aplicação de exemplo e testes para demonstração ao vivo",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium && node scripts/preparar-mcp.js && npm run visual:base",
+    "start": "node server.js",
+    "mcp:por-dentro": "node scripts/mcp-por-dentro.js",
+    "test": "playwright test --project=chromium --grep-invert @bug",
+    "demo": "playwright test --project=demo --grep-invert @bug --workers=1",
+    "demo:destaques": "playwright test --project=demo --grep @destaque --workers=1",
+    "demo:1": "playwright test tests/01-primeiro-teste.spec.ts --project=demo",
+    "demo:2": "playwright test tests/02-login.spec.ts --project=demo --workers=1",
+    "demo:3": "playwright test tests/03-tarefas.spec.ts --project=demo --workers=1",
+    "demo:4": "playwright test tests/04-rede-e-api.spec.ts --project=chromium",
+    "demo:galeria": "playwright test tests/06-galeria.spec.ts --project=demo --grep-invert @bug --workers=1",
+    "demo:kanban": "playwright test tests/08-kanban.spec.ts --project=demo --workers=1",
+    "demo:foco": "playwright test tests/09-foco-relogio.spec.ts --project=demo --workers=1",
+    "demo:celular": "playwright test tests/10-celular.spec.ts --project=demo --workers=1",
+    "demo:visual": "playwright test --project=chromium --grep @visual",
+    "demo:acessibilidade": "playwright test tests/11-acessibilidade.spec.ts --project=chromium",
+    "demo:falha": "playwright test --project=chromium --grep @bug",
+    "visual:base": "playwright test --project=chromium --grep @visual --update-snapshots",
+    "sabotar": "node scripts/sabotar.js",
+    "resetar": "node scripts/resetar-demo.js",
+    "ui": "playwright test --ui --project=chromium",
+    "gravar": "node scripts/gravar.js",
+    "relatorio": "node scripts/relatorio.js",
+    "relatorio:fechar": "node scripts/relatorio.js --fechar",
+    "navegadores": "npx playwright install firefox webkit && playwright test --project=chromium --project=firefox --project=webkit --project=mobile --grep-invert @bug"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/mcp": "0.0.83",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^22.0.0"
+  }
+}

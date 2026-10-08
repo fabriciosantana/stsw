@@ -1,4 +1,6 @@
-## Estudo de caso: The Practical Test Pyramid
+# Estudo de caso: The Practical Test Pyramid
+
+Execute o tutorial [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html).
 
 - Reaproveite a estrutura Maven com JUnit 5 e Cucumber para construir o projeto da atividade no seu diretório pessoal.
 - Implemente uma aplicação simulando um serviço de gerenciamento de pedidos (`OrderService`).

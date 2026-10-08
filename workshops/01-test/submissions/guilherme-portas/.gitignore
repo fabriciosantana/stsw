@@ -1,0 +1,5 @@
+# Resultados regeneráveis (gerar com ./run.sh smoke|carga)
+*.jtl
+*.log
+jmeter.log
+report-*/
