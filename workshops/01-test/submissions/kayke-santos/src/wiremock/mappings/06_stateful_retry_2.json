@@ -1,0 +1,17 @@
+{
+  "scenarioName": "RetryScenario",
+  "requiredScenarioState": "SecondAttempt",
+  "request": {
+    "method": "GET",
+    "url": "/api/retry-test"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "status": "SUCESSO",
+      "tentativa": 2,
+      "mensagem": "Recuperado com sucesso após retry na 2ª tentativa."
+    }
+  }
+}

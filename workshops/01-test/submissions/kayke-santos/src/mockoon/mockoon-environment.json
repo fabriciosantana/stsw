@@ -1,0 +1,324 @@
+{
+  "uuid": "0f84527b-1a34-4de3-90f0-c97da2474a0a",
+  "lastMigration": 33,
+  "name": "Seminário Livraria API - Mockoon Demo",
+  "endpointPrefix": "api",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "0.0.0.0",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "a99952e7-450b-45d2-873b-6cd03be2ed6b",
+      "type": "http",
+      "documentation": "Exemplo 1: Catálogo de Livros puxando do Data Bucket (e Faker.js)",
+      "method": "get",
+      "endpoint": "livros",
+      "responses": [
+        {
+          "uuid": "7226a9e6-ca38-4881-afb7-c03ac2ef4c0a",
+          "body": "{{data 'catalogo_livros'}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "200 OK - Puxando do Data Bucket",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "catalogo_livros",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "b11152e7-450b-45d2-873b-6cd03be2ed6c",
+      "type": "http",
+      "documentation": "Exemplo 2: Cadastro de Livro com Regra Condicional (Preço > 500 ➔ 422 / Sucesso ➔ 201)",
+      "method": "post",
+      "endpoint": "livros",
+      "responses": [
+        {
+          "uuid": "8226a9e6-ca38-4881-afb7-c03ac2ef4c0b",
+          "body": "{\n  \"erro\": \"PRECO_EXCESSIVO\",\n  \"mensagem\": \"Não é permitido cadastrar livros com valor superior a R$ 500.00\",\n  \"precoEnviado\": {{body 'preco'}}\n}",
+          "latency": 0,
+          "statusCode": 422,
+          "label": "422 Unprocessable Entity - Preço > 500",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "operator": "regex",
+              "value": "^(50[1-9]|5[1-9]\\d|[6-9]\\d{2}|\\d{4,})",
+              "invert": false,
+              "modifier": "preco"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "9226a9e6-ca38-4881-afb7-c03ac2ef4c0c",
+          "body": "{\n  \"status\": \"LIVRO_CADASTRADO\",\n  \"codigoLivro\": \"LIV-{{faker 'string.alphanumeric' 8}}\",\n  \"preco\": {{body 'preco'}},\n  \"dataCadastro\": \"{{now}}\"\n}",
+          "latency": 50,
+          "statusCode": 201,
+          "label": "201 Created - Sucesso Preço <= 500",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "d33352e7-450b-45d2-873b-6cd03be2ed6e",
+      "type": "http",
+      "documentation": "Exemplo 3: Processamento Assíncrono com Callback HTTP (Dispara Webhook após 1s)",
+      "method": "post",
+      "endpoint": "livros/processar",
+      "responses": [
+        {
+          "uuid": "b336a9e6-ca38-4881-afb7-c03ac2ef4c0e",
+          "body": "{\n  \"status\": \"PROCESSANDO_ASSINCRONO\",\n  \"mensagem\": \"Pedido recebido! O Callback Webhook será disparado em 1 segundo.\",\n  \"livroId\": \"{{body 'livroId' 'LIV-PADRAO'}}\",\n  \"protocolo\": \"PROTO-{{faker 'string.alphanumeric' 10}}\",\n  \"dataRequisicao\": \"{{now}}\"\n}",
+          "latency": 0,
+          "statusCode": 202,
+          "label": "202 Accepted - Dispara Callback Webhook",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": [
+            {
+              "uuid": "4c9e8371-3312-4eb5-8e3b-b2b9320e6f0b",
+              "latency": 1000
+            }
+          ]
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "e44452e7-450b-45d2-873b-6cd03be2ed6f",
+      "type": "http",
+      "documentation": "Receptor do Webhook de Notificação / Callback",
+      "method": "post",
+      "endpoint": "webhooks/confirmacao",
+      "responses": [
+        {
+          "uuid": "c446a9e6-ca38-4881-afb7-c03ac2ef4c0f",
+          "body": "{\n  \"status\": \"WEBHOOK_RECEBIDO_COM_SUCESSO\",\n  \"mensagem\": \"Notificação de processamento recebida com sucesso!\",\n  \"dataRecebimento\": \"{{now}}\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "200 OK - Webhook Recebido",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "c22252e7-450b-45d2-873b-6cd03be2ed6d",
+      "type": "http",
+      "documentation": "Exemplo Extra: Simulação de Latência de Rede (3000ms)",
+      "method": "get",
+      "endpoint": "livros/lento",
+      "responses": [
+        {
+          "uuid": "a226a9e6-ca38-4881-afb7-c03ac2ef4c0d",
+          "body": "{\n  \"status\": \"SUCESSO_COM_ATRASO\",\n  \"mensagem\": \"Busca concluída após 3000ms de latência simulada.\",\n  \"timestamp\": \"{{now}}\"\n}",
+          "latency": 3000,
+          "statusCode": 200,
+          "label": "200 OK com 3000ms Latência",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "a99952e7-450b-45d2-873b-6cd03be2ed6b"
+    },
+    {
+      "type": "route",
+      "uuid": "b11152e7-450b-45d2-873b-6cd03be2ed6c"
+    },
+    {
+      "type": "route",
+      "uuid": "d33352e7-450b-45d2-873b-6cd03be2ed6e"
+    },
+    {
+      "type": "route",
+      "uuid": "e44452e7-450b-45d2-873b-6cd03be2ed6f"
+    },
+    {
+      "type": "route",
+      "uuid": "c22252e7-450b-45d2-873b-6cd03be2ed6d"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "946587f2-07a6-4c0f-b920-44bcd2482065",
+      "id": "catalogo_livros",
+      "name": "Catálogo de Livros (Data Bucket)",
+      "documentation": "Data Bucket com base de dados de livros para consulta direta ou via helper {{data 'catalogo_livros'}}",
+      "value": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Arquitetura Limpa: O Guia do Artesão para Estrutura e Design de Software\",\n    \"autor\": \"Robert C. Martin\",\n    \"categoria\": \"Engenharia de Software\",\n    \"preco\": 89.90,\n    \"estoque\": 15,\n    \"disponivel\": true\n  },\n  {\n    \"id\": 2,\n    \"titulo\": \"Domain-Driven Design: Atacando as Complexidades no Coração do Software\",\n    \"autor\": \"Eric Evans\",\n    \"categoria\": \"Arquitetura\",\n    \"preco\": 120.50,\n    \"estoque\": 8,\n    \"disponivel\": true\n  },\n  {\n    \"id\": 3,\n    \"titulo\": \"O Programador Pragmático: De Aprendiz a Mestre\",\n    \"autor\": \"Andrew Hunt & David Thomas\",\n    \"categoria\": \"Boas Práticas\",\n    \"preco\": 95.00,\n    \"estoque\": 20,\n    \"disponivel\": true\n  }\n]"
+    }
+  ],
+  "callbacks": [
+    {
+      "uuid": "4c9e8371-3312-4eb5-8e3b-b2b9320e6f0b",
+      "id": "cb_confirmacao",
+      "name": "Webhook Notificação de Processamento",
+      "documentation": "Dispara POST assíncrono para o endpoint de webhooks quando um processamento é aceito",
+      "method": "post",
+      "uri": "http://localhost:3001/api/webhooks/confirmacao",
+      "body": "{\n  \"evento\": \"LIVRO_PROCESSADO_SUCESSO\",\n  \"livroId\": \"{{body 'livroId' 'LIV-001'}}\",\n  \"status\": \"CONCLUIDO\",\n  \"timestamp\": \"{{now}}\"\n}",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "sendFileAsBody": false,
+      "filePath": "",
+      "bodyType": "INLINE",
+      "databucketID": ""
+    }
+  ]
+}

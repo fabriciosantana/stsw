@@ -1,0 +1,19 @@
+{
+  "name": "wiremock-mockoon-tests",
+  "version": "1.0.0",
+  "description": "Testes Automatizados para WireMock e Mockoon",
+  "type": "module",
+  "main": "test-runner.js",
+  "scripts": {
+    "test": "node --test test-runner.js",
+    "test:wiremock": "node --test tests/wiremock.test.js",
+    "test:mockoon": "node --test tests/mockoon.test.js"
+  },
+  "keywords": [
+    "wiremock",
+    "mockoon",
+    "tests"
+  ],
+  "author": "Kayke Santos",
+  "license": "ISC"
+}

@@ -1,0 +1,25 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "POST",
+    "url": "/api/pagamentos",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.valor[?(@ <= 1000)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "transacaoId": "TX-{{randomValue type='UUID'}}",
+      "status": "APROVADO",
+      "mensagem": "Pagamento processado com sucesso via WireMock.",
+      "timestamp": "{{now format='yyyy-MM-dd HH:mm:ss'}}"
+    },
+    "transformers": ["response-template"]
+  }
+}

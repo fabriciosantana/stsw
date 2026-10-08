@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/lento"
+  },
+  "response": {
+    "status": 200,
+    "fixedDelayMilliseconds": 3000,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "mensagem": "Esta resposta demorou 3 segundos para simular um teste de timeout e resiliência."
+    }
+  }
+}

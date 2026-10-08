@@ -1,0 +1,23 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/api/pagamentos",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.valor[?(@ > 1000)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 422,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "codigoErro": "SALDO_INSUFICIENTE",
+      "mensagem": "Transação recusada: O valor solicitado excede o limite estipulado.",
+      "limiteMaximo": 1000.00
+    }
+  }
+}

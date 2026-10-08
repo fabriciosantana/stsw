@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nome": "Kayke Silva",
+    "email": "kayke@exemplo.com",
+    "cargo": "Desenvolvedor Backend",
+    "status": "ATIVO"
+  },
+  {
+    "id": 2,
+    "nome": "Maria Eduarda",
+    "email": "maria@exemplo.com",
+    "cargo": "QA Engineer",
+    "status": "ATIVO"
+  }
+]
