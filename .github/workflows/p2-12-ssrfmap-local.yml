@@ -20,11 +20,11 @@ jobs:
         run: |
           set -euo pipefail
           ROOT="$PWD/prompts/submissions/leonardo-freitas"
+          python "$ROOT/lab/ssrf_lab.py" --demo > /tmp/p2-12-demo-again.txt
           python "$ROOT/lab/ssrf_lab.py" --serve > /tmp/p2-12-lab-server.log 2>&1 &
           LAB_PID=$!
           trap 'kill "$LAB_PID" 2>/dev/null || true' EXIT
           sleep 2
-          python "$ROOT/lab/ssrf_lab.py" --demo > /tmp/p2-12-demo-again.txt
           git clone --depth 1 https://github.com/swisskyrepo/SSRFmap.git /tmp/p2-12-ssrfmap
           cd /tmp/p2-12-ssrfmap
           printf '19081\n19082\n' > data/ports
