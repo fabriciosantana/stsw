@@ -1,4 +1,4 @@
-name: Temporary P2-12 SSRFmap local lab validation
+name: Temporary P2-12 SSRFmap local lab validation (corrected HTTP request)
 on:
   push:
     branches: [p2-12-ssrf-leonardo]
