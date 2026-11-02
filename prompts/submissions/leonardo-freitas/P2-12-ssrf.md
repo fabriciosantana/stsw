@@ -156,7 +156,7 @@ uv run python ssrfmap.py -r /CAMINHO/ABSOLUTO/DO/PROJETO/lab/request-ssrfmap.txt
 
 **Interpretação:** um retorno diferente do controle pode sugerir que o backend fez uma conexão ao destino. A confirmação mais robusta é conferir o código do laboratório, a resposta de `INTERNAL-ONLY` e os registros locais. A ausência de alertas **não prova** que a aplicação é segura; filtros, respostas uniformes e falhas de comunicação podem ocultar a diferença.
 
-**Registro de execução:** a execução efetiva da ferramenta e suas limitações são documentadas no arquivo `evidencias/STATUS.md`. Não reproduzir uma saída “fictícia” como se fosse saída real da ferramenta.
+**Execução real do SSRFmap (confirmada):** a ferramenta foi clonada de seu repositório oficial e executada em um runner isolado do GitHub Actions, **somente contra `127.0.0.1`**, com a lista `data/ports` restringida a **19081** e **19082**. O comando usou `-r lab/request-ssrfmap.txt -p url -m portscan --level 1` e terminou com código **0**. O SSRFmap classificou as portas **19081** e **19082** como `open`; a demonstração Python confirmou que o endpoint vulnerável acessa o serviço interno fictício e o endpoint protegido retorna **403** ao mesmo destino. A classificação `open` isoladamente é uma **heurística**, não prova de comprometimento. **Evidência verificável:** [log do SSRFmap em GitHub Actions](evidencias/resultado-ssrfmap-github-actions.txt) e [execução #41528865756](https://github.com/leofreitasb/stsw/actions/runs/41528865756). Nenhum alvo de terceiros foi analisado.
 
 **Uso responsável:** apenas em ambientes próprios ou autorizados por escrito, com escopo, taxa e duração definidos; sem coleta de segredos reais, sem ações destrutivas e mantendo logs mínimos, restritos e sem dados pessoais.
 
