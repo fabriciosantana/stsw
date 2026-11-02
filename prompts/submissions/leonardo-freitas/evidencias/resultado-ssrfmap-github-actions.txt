@@ -9,12 +9,8 @@ Downloading pygments (1.2MiB)
 Downloading ruff (10.9MiB)
  Downloaded pygments
  Downloaded ruff
-Installed 25 packages in 10ms
-[[1;31mWARNING[1;0m]:Bad request format: invalid header line: ''
+Installed 25 packages in 15ms
 [INFO]:Module 'portscan' launched !
-[[1;41mERROR[1;0m]:Invalid URL 'http:///fetch?url=': No host supplied
-[[1;41mERROR[1;0m]:Invalid URL 'http:///fetch?url=http%3A%2F%2F127.0.0.1%3A19081%2F': No host supplied
-[[1;41mERROR[1;0m]:Invalid URL 'http:///fetch?url=http%3A%2F%2F127.0.0.1%3A19082%2F': No host supplied
  _____ _________________                     
 /  ___/  ___| ___ \  ___|                    
 \ `--.\ `--.| |_/ / |_ _ __ ___   __ _ _ __  
@@ -24,7 +20,9 @@ Installed 25 packages in 10ms
                                       | |    
                                       |_|    
 [INFO] Log file '/tmp/p2-12-ssrfmap-tool.log'
-	[21:28:49] Checking port n°19081                    	[21:28:49] Checking port n°19082                    
+	[21:30:09] IP:127.0.0.1   , Found [32mopen     [0m port n°19082                    
+	[21:30:09] Checking port n°19082                    	[21:30:09] IP:127.0.0.1   , Found [32mopen     [0m port n°19081                    
+	[21:30:09] Checking port n°19081                    
 Local server log:
 LAB LOCAL: http://127.0.0.1:19080 (Ctrl+C encerra)
 
