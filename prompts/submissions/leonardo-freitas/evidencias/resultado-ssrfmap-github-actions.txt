@@ -1,0 +1,44 @@
+P2-12 SSRFmap real execution in isolated GitHub Actions runner
+Execution: SSRFmap official source cloned on runner; targets: 127.0.0.1:19081 and :19082 ONLY
+SSRFmap exit code: 0
+
+SSRFmap stdout and stderr:
+Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3
+Creating virtual environment at: .venv
+Downloading pygments (1.2MiB)
+Downloading ruff (10.9MiB)
+ Downloaded pygments
+ Downloaded ruff
+Installed 25 packages in 15ms
+[INFO]:Module 'portscan' launched !
+ _____ _________________                     
+/  ___/  ___| ___ \  ___|                    
+\ `--.\ `--.| |_/ / |_ _ __ ___   __ _ _ __  
+ `--. \`--. \    /|  _| '_ ` _ \ / _` | '_ \ 
+/\__/ /\__/ / |\ \| | | | | | | | (_| | |_) |
+\____/\____/\_| \_\_| |_| |_| |_|\__,_| .__/ 
+                                      | |    
+                                      |_|    
+[INFO] Log file '/tmp/p2-12-ssrfmap-tool.log'
+	[21:30:09] IP:127.0.0.1   , Found [32mopen     [0m port n°19082                    
+	[21:30:09] Checking port n°19082                    	[21:30:09] IP:127.0.0.1   , Found [32mopen     [0m port n°19081                    
+	[21:30:09] Checking port n°19081                    
+Local server log:
+LAB LOCAL: http://127.0.0.1:19080 (Ctrl+C encerra)
+
+Local Python test log:
+PASS 1. Recurso publico via endpoint vulneravel
+     URL inserida: http://127.0.0.1:19082/image/demo.png
+     HTTP: 200 | Resposta: PUBLIC-ASSET: imagem de demonstracao (conteudo ficticio)
+PASS 2. SSRF: acessa servico INTERNO via servidor
+     URL inserida: http://127.0.0.1:19081/admin/status
+     HTTP: 200 | Resposta: INTERNAL-ONLY: exemplo ficticio de dados administrativos
+PASS 3. Controle: allowlist bloqueia SSRF interno
+     URL inserida: http://127.0.0.1:19081/admin/status
+     HTTP: 403 | Resposta: BLOCKED: destino nao permitido pela allowlist
+PASS 4. Controle: permite URL aprovada
+     URL inserida: http://127.0.0.1:19082/image/demo.png
+     HTTP: 200 | Resposta: PUBLIC-ASSET: imagem de demonstracao (conteudo ficticio)
+
+RESULTADO: 4 cenarios PASSARAM; a falha da rota vulneravel foi reproduzida e bloqueada pela allowlist.
+LIMITACAO: NAO constitui execucao da ferramenta SSRFmap nem prova de um lab PortSwigger resolvido.

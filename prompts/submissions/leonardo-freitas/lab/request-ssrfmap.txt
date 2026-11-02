@@ -1,0 +1,5 @@
+GET /fetch?url=http%3A%2F%2F127.0.0.1%3A19082%2Fimage%2Fdemo.png HTTP/1.1
+Host: 127.0.0.1:19080
+User-Agent: P2-12-SSRF-Local-Lab
+Connection: close
+
