@@ -1,0 +1,15 @@
+PASS 1. Recurso publico via endpoint vulneravel
+     URL inserida: http://127.0.0.1:19082/image/demo.png
+     HTTP: 200 | Resposta: PUBLIC-ASSET: imagem de demonstracao (conteudo ficticio)
+PASS 2. SSRF: acessa servico INTERNO via servidor
+     URL inserida: http://127.0.0.1:19081/admin/status
+     HTTP: 200 | Resposta: INTERNAL-ONLY: exemplo ficticio de dados administrativos
+PASS 3. Controle: allowlist bloqueia SSRF interno
+     URL inserida: http://127.0.0.1:19081/admin/status
+     HTTP: 403 | Resposta: BLOCKED: destino nao permitido pela allowlist
+PASS 4. Controle: permite URL aprovada
+     URL inserida: http://127.0.0.1:19082/image/demo.png
+     HTTP: 200 | Resposta: PUBLIC-ASSET: imagem de demonstracao (conteudo ficticio)
+
+RESULTADO: 4 cenarios PASSARAM; a falha da rota vulneravel foi reproduzida e bloqueada pela allowlist.
+LIMITACAO: NAO constitui execucao da ferramenta SSRFmap nem prova de um lab PortSwigger resolvido.
