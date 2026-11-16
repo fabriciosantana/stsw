@@ -1,0 +1,9 @@
+Execucao local em 16/11/2026, Windows, OpenJDK 21.0.12.1
+Comandos: javac -d <diretorio-temporario> P2-13/AuthDemo.java; java -cp <diretorio-temporario> AuthDemo
+
+Saida:
+OK: senha correta aceita
+OK: senha incorreta rejeitada
+OK: usuario inexistente rejeitado
+Resultado: 3/3 verificacoes locais passaram.
+
