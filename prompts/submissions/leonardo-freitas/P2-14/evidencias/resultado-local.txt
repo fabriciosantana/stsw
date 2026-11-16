@@ -1,0 +1,14 @@
+Execucao local em 16/11/2026, Windows, OpenJDK 21.0.12.1.
+Aplicacao ficticia vinculada apenas a 127.0.0.1 com porta efemera.
+Comandos: javac -d <diretorio-temporario> P2-14/AccessControlLab.java; java -cp <diretorio-temporario> AccessControlLab
+
+usuario-1 GET /secure/profile?userId=1 -> HTTP 200 / perfil-ficticio-usuario-1
+usuario-1 GET /insecure/profile?userId=2 -> HTTP 200 / perfil-ficticio-usuario-2
+usuario-1 GET /secure/profile?userId=2 -> HTTP 403 / acesso negado
+usuario-2 GET /secure/profile?userId=2 -> HTTP 200 / perfil-ficticio-usuario-2
+usuario-1 GET /secure/admin/report -> HTTP 403 / acesso negado
+admin GET /secure/admin/report -> HTTP 200 / relatorio-administrativo-ficticio
+sem-sessao GET /secure/profile?userId=1 -> HTTP 401 / autenticacao exigida
+admin GET /secure/profile?userId=2 -> HTTP 200 / perfil-ficticio-usuario-2
+Resultado: 8/8 verificacoes HTTP locais passaram.
+
