@@ -5,7 +5,6 @@
 **Professor:** Fabricio Santana  
 **Prompt:** [prompts/16-outdated.md](https://github.com/fabriciosantana/stsw/blob/2026.2/prompts/16-outdated.md)
 
-> Esta resposta segue a categoria A06:2021 do material da atividade. A análise de ferramentas e os comandos abaixo são procedimentos reproduzíveis. Dependency-Check, Trivy e Juice Shop não foram executados nesta entrega; não são declarados resultados de scanner.
 
 ## 1. Introdução à Vulnerabilidade de Componentes Vulneráveis e Desatualizados
 
