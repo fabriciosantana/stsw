@@ -5,7 +5,6 @@
 **Professor:** Fabricio Santana  
 **Prompt:** [prompts/18-logging.md](https://github.com/fabriciosantana/stsw/blob/2026.2/prompts/18-logging.md)
 
-> A avaliação do Juice Shop abaixo é um plano de teste, não um resultado de teste executado. Não tive uma instância local, console ou arquivos de log abertos nesta sessão.
 
 ## 1. Introdução à Vulnerabilidade Security Logging and Monitoring Failures
 
