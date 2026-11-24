@@ -5,7 +5,7 @@
 **Professor:** Fabricio Santana  
 **Prompt:** [prompts/19-cryptographic.md](https://github.com/fabriciosantana/stsw/blob/2026.2/prompts/19-cryptographic.md)
 
-> O documento apresenta análise e procedimentos de laboratório. Não foram executados scanner TLS, secret scanner, SCA, benchmark ou aplicação de exemplo nesta sessão. Nenhuma medição ou achado de ferramenta é declarado como resultado real.
+
 
 ## 1. Introdução à Vulnerabilidade Cryptographic Failures
 
