@@ -5,7 +5,6 @@
 **Professor:** Fabricio Santana  
 **Prompt:** [prompts/17-integrity.md](https://github.com/fabriciosantana/stsw/blob/2026.2/prompts/17-integrity.md)
 
-> As análises de casos públicos e o pipeline abaixo são resposta teórica e proposta de laboratório. Nenhuma varredura, build ou execução de Juice Shop foi realizada nesta entrega.
 
 ## 1. Introdução à Vulnerabilidade Software and Data Integrity Failures
 
