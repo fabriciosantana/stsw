@@ -1,41 +1,35 @@
 # Evidências de execução — I2-09
 
 **Aluno:** Leonardo Freitas  
-**Data deste inventário:** 24/11/2026  
-**Estado:** **não comprovado** — nenhum dos oito laboratórios foi executado ou validado nesta sessão de preparação do Pull Request.
+**Atualização do inventário:** 26/11/2026  
+**Estado documentado:** **2 de 8 desafios com evidência direta**. As capturas recebidas mostram dois desafios de Security Misconfiguration do Juice Shop concluídos. Não comprovam a execução dos outros dois desafios Juice Shop nem dos quatro laboratórios PortSwigger.
 
-Este documento distingue **roteiro de solução** de **evidência de execução**. Os caminhos abaixo são nomes sugeridos para capturas futuras; **arquivos de imagem ainda não foram anexados**. Não confundir imagens de I2-08 (identificação/autenticação) com as oito imagens exigidas para I2-09.
+## Inventário
 
-| ID | Plataforma | Desafio | Status verificável | Imagem esperada |
+| ID | Plataforma | Desafio | Status baseado nas capturas | Evidência |
 |---|---|---|---|---|
-| JS-01 | Juice Shop | Error Handling | Pendente: sem acesso à instância | `evidencias/01-error-handling.png` |
-| JS-02 | Juice Shop | Deprecated Interface | Pendente: sem acesso à instância | `evidencias/02-deprecated-interface.png` |
-| JS-03 | Juice Shop | Frontend Typosquatting | Pendente: sem acesso à instância | `evidencias/03-frontend-typosquatting.png` |
-| JS-04 | Juice Shop | Vulnerable Library | Pendente: sem acesso à instância | `evidencias/04-vulnerable-library.png` |
-| PS-01 | PortSwigger | Information disclosure in error messages | Pendente: sem sessão do lab | `evidencias/05-infoleak-error.png` |
-| PS-02 | PortSwigger | Information disclosure on debug page | Pendente: sem sessão do lab | `evidencias/06-infoleak-debug.png` |
-| PS-03 | PortSwigger | Source code disclosure via backup files | Pendente: sem sessão do lab | `evidencias/07-infoleak-backup.png` |
-| PS-04 | PortSwigger | Authentication bypass via information disclosure | Pendente: sem sessão do lab | `evidencias/08-auth-bypass-infoleak.png` |
+| JS-01 | OWASP Juice Shop | Error Handling | Concluído: aparece na lista “Challenge Solved!” | [PDF, página 1](./evidencias/juice-shop-capturas.pdf) |
+| JS-02 | OWASP Juice Shop | Deprecated Interface | Concluído: aparece na lista “Challenge Solved!” | [PDF, página 1](./evidencias/juice-shop-capturas.pdf) |
+| JS-03 | OWASP Juice Shop | Frontend Typosquatting | Pendente: nenhuma captura do desafio no Score Board | — |
+| JS-04 | OWASP Juice Shop | Vulnerable Library | Pendente: auditoria resumida não mostra a conclusão do desafio no Score Board | [Auditoria suplementar, PDF página 2](./evidencias/juice-shop-capturas.pdf) |
+| PS-01 | PortSwigger | Information disclosure in error messages | Pendente: sem captura de conclusão da instância | — |
+| PS-02 | PortSwigger | Information disclosure on debug page | Pendente: sem captura de conclusão da instância | — |
+| PS-03 | PortSwigger | Source code disclosure via backup files | Pendente: sem captura de conclusão da instância | — |
+| PS-04 | PortSwigger | Authentication bypass via information disclosure | Pendente: sem captura de conclusão da instância | — |
 
-## Orientações de captura (uma por desafio)
+## O que as imagens mostram
 
-1. Ao concluir no Juice Shop, registrar **Score Board** com o **nome e status do desafio**. Uma tela apenas com erro sem *Challenge Solved* é evidência parcial.
-2. Ao concluir na PortSwigger, mostrar a página do lab com **Solved** e o **nome/URL** legíveis.
-3. Nomear os arquivos conforme a tabela e colocá-los neste repositório em `assignments/09-security/submissions/leonardo-freitas/evidencias/`.
-4. Registrar aqui, para cada caso: data/hora, URL base (sem tokens), versão do Juice Shop quando aplicável, requisição/efeito observado, status de conclusão e nome do arquivo.
-5. Ocultar senhas, tokens, cookies de sessão, variáveis sensíveis e identificadores privados nas capturas, mantendo a parte que prova a conclusão.
+- **Página 1:** instância local em `localhost:3000`; aviso “Challenge Solved!” e lista com “Exposed Metrics”, “Deprecated Interface” e “Error Handling”. Isso evidencia diretamente os dois desafios do Juice Shop exigidos na parte de Security Misconfiguration. “Exposed Metrics” aparece como desafio adicional, não substitui outro item do enunciado.
+- A mesma imagem mostra solicitações observadas no navegador para `/metrics`, `/ftp/package.json.bak` e `/rest/admin/application-configuration`. A imagem, sozinha, não registra respostas completas nem comprova os quatro labs da PortSwigger.
+- **Página 2:** painel “Security Audit Results” em `localhost:3000), com status “Audit Passed” e quatro itens listados como “Fixed”, incluindo dependências JWT/Sanitize-HTML. É uma tela de auditoria, mas não mostra o Score Board com os desafios oficiais “Frontend Typosquatting” e “Vulnerable Library”; portanto, não foi contabilizada como conclusão desses desafios.
+- Os arquivos `print_2.jpg` e `print_3.jpg` eram duplicados idênticos; a captura foi incluída uma vez no PDF para evitar repetição.
 
-## Modelo para completar cada resultado
+O PDF preserva as capturas fornecidas, reunidas em duas páginas. A data acima registra a atualização deste inventário, não uma data de execução inferida das imagens. O conteúdo comprova apenas o que está visível nelas; os demais resultados continuam pendentes.
 
-```md
-### JS-01 — Error Handling
-- Data da execução: AAAA-MM-DD
-- Instância/versão:
-- Procedimento aplicado:
-- Resposta/efeito observado:
-- Resultado no Score Board / Solved:
-- Evidência: ![Descrição](evidencias/01-error-handling.png)
-- Observações e mitigação:
-```
+## Orientações para completar os resultados
 
-**Não marcar um caso como concluído enquanto não houver prova de execução real.**
+1. Para JS-03 e JS-04, anexar captura do Score Board indicando o nome do desafio concluído.
+2. Para PS-01 a PS-04, anexar uma captura individual por laboratório mostrando “Solved” e o nome ou a URL da instância.
+3. Ocultar senhas, tokens, cookies, chaves e outros dados sensíveis, sem remover a parte necessária para demonstrar a conclusão.
+
+**Não considerar a I2-09 integralmente concluída até haver evidência para os oito desafios.**
