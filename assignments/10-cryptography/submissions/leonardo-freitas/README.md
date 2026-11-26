@@ -9,7 +9,7 @@
 
 O enunciado da atividade indica um desafio do OWASP Juice Shop: **“Inform the shop about an algorithm or library it should definitely not use the way it does”**, também identificado como **Weird Crypto**.
 
-**Estado nesta entrega:** o roteiro abaixo descreve como executar e validar o desafio, mas não comprova a execução. As imagens anexadas junto a esta solicitação mostram a interface da atividade anterior, I2-09, e não foram usadas como evidência da I2-10. Consulte [EVIDENCIAS.md](./EVIDENCIAS.md).
+**Estado nesta entrega:** o roteiro abaixo descreve como executar e validar o desafio, mas não comprova a execução. O aluno informou que as três imagens anexadas são desta atividade; elas foram incluídas em [evidencias/prints-recebidos.pdf](./evidencias/prints-recebidos.pdf), conforme solicitado. Nas telas visíveis, porém, aparecem a identificação **I2-09 — Security Misconfiguration / Vulnerable and Outdated Components** e desafios dessa categoria. Elas não mostram Weird Crypto resolvido e, portanto, não comprovam a conclusão da I2-10. Consulte [EVIDENCIAS.md](./EVIDENCIAS.md).
 
 ## Desafio — Weird Crypto
 
