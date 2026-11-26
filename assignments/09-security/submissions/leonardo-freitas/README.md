@@ -8,9 +8,9 @@
 
 ## Escopo e estado desta entrega
 
-O enunciado exige **oito desafios práticos**: quatro do OWASP Juice Shop e quatro da PortSwigger Web Security Academy. Este material contém as **instruções reproduzíveis**, as causas e as medidas corretivas para cada desafio, verificadas contra as referências oficiais. **Não representa oito execuções já realizadas:** não houve acesso à instância local do Juice Shop nem às instâncias autenticadas da PortSwigger nesta sessão. Nenhuma captura de tela de conclusão foi fornecida para esta atividade.
+O enunciado exige **oito desafios práticos**: quatro do OWASP Juice Shop e quatro da PortSwigger Web Security Academy. Este material contém as instruções reproduzíveis, causas e medidas corretivas para os oito desafios, com base nas referências indicadas.
 
-**Situação de execução:** 0/8 laboratórios comprovados. Consulte [EVIDENCIAS.md](./EVIDENCIAS.md) antes de considerar a atividade pronta para envio.
+**Situação atual:** as capturas fornecidas mostram **2/8 desafios diretamente comprovados**: *Error Handling* e *Deprecated Interface* no Juice Shop. O PDF com as capturas e a análise individual estão em [evidencias/juice-shop-capturas.pdf](./evidencias/juice-shop-capturas.pdf) e [EVIDENCIAS.md](./EVIDENCIAS.md). A tela de auditoria adicional não comprova a conclusão de *Frontend Typosquatting* ou *Vulnerable Library*. Os quatro laboratórios PortSwigger também continuam sem evidências nesta entrega. Portanto, este PR permanece parcial e não deve ser apresentado como conclusão dos oito desafios.
 
 > **Escopo ético:** executar apenas no Juice Shop próprio/laboratório autorizado e nas instâncias iniciadas pela sua conta na Web Security Academy. Não aplicar estes testes a sistemas de terceiros.
 
@@ -155,7 +155,7 @@ Apenas considerar a I2-09 integralmente concluída se:
 - [ ] Os resultados reais, versões, respostas HTTP e observações tiverem sido registrados sem segredos sensíveis.
 - [ ] O Pull Request contiver apenas os arquivos da I2-09, tiver sido revisado e seu link submetido no AVA.
 
-**Observação:** este README foi preparado como roteiro técnico com base em fontes oficiais, não como um relatório de execução bem-sucedida. Sua leitura não comprova os oito desafios.
+**Observação:** este README é um roteiro técnico baseado em fontes oficiais. As únicas execuções consideradas comprovadas são as duas mostradas nas capturas recebidas; o roteiro, por si só, não comprova os oito desafios.
 
 ## Fontes oficiais
 
